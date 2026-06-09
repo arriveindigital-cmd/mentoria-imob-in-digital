@@ -1,1211 +1,587 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Mentoria Imob In Digital</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mentoria Imob In Digital — Arrive In Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg:      #07070e;
-    --surf:    #0d0d1b;
-    --surf2:   #111122;
-    --border:  #1b1b30;
-    --border2: #252540;
-    --p:       #7c3aed;
-    --pl:      #a855f7;
-    --g:       linear-gradient(135deg,#7c3aed 0%,#a855f7 100%);
-    --glow:    rgba(124,58,237,.18);
-    --green:   #10b981;
-    --greenl:  #34d399;
-    --yellow:  #f59e0b;
-    --red:     #ef4444;
-    --tx:      #f0f0f8;
-    --tx2:     #6868a0;
-    --tx3:     #32324e;
-    --r:       14px;
-    --r-sm:    8px;
-    --sw:      260px;
-  }
+:root {
+  --bg: #08080f;
+  --surface: rgba(255,255,255,0.04);
+  --border: rgba(255,255,255,0.08);
+  --purple: #7c3aed;
+  --purple-light: #a855f7;
+  --pink: #db2777;
+  --gradient: linear-gradient(135deg, #7c3aed 0%, #db2777 100%);
+  --text: #f8f8fc;
+  --muted: rgba(248,248,252,0.5);
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+h1,h2,h3,h4 { font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
+.gradient-text { background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.container { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+.section { padding: 120px 0; }
 
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{
-    font-family:'Inter','Segoe UI',system-ui,sans-serif;
-    background:var(--bg);color:var(--tx);
-    display:flex;min-height:100vh;font-size:14px;line-height:1.6;
-    overflow:hidden;
-  }
+/* NAV */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 18px 40px; display: flex; justify-content: space-between; align-items: center; transition: background 0.3s, border-color 0.3s; border-bottom: 1px solid transparent; }
+nav.scrolled { background: rgba(8,8,15,0.92); backdrop-filter: blur(24px); border-color: var(--border); }
+.nav-logo { font-size: 17px; font-weight: 800; color: var(--text); display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.nav-logo-icon { width: 34px; height: 34px; background: var(--gradient); border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 900; color: white; }
 
-  /* ─── SCROLLBAR ─────────────────────────── */
-  ::-webkit-scrollbar{width:3px}
-  ::-webkit-scrollbar-track{background:transparent}
-  ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+/* BUTTONS */
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; border: none; text-decoration: none; transition: all 0.2s; font-family: var(--font); }
+.btn-primary { background: var(--gradient); color: white; }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 40px rgba(124,58,237,0.4); }
+.btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+.btn-outline:hover { border-color: rgba(124,58,237,0.5); background: rgba(124,58,237,0.08); }
+.btn-sm { padding: 9px 18px; font-size: 13px; }
+.btn-lg { padding: 18px 44px; font-size: 17px; border-radius: 14px; }
 
-  /* ─── SIDEBAR ───────────────────────────── */
-  #sidebar{
-    width:var(--sw);flex-shrink:0;
-    background:#050510;
-    border-right:1px solid var(--border);
-    display:flex;flex-direction:column;
-    height:100vh;position:sticky;top:0;
-    overflow-y:auto;
-  }
+/* TAGS */
+.tag { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: 100px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+.tag-purple { background: rgba(124,58,237,0.12); color: var(--purple-light); border: 1px solid rgba(124,58,237,0.25); }
 
-  .sb-brand{
-    padding:24px 20px 20px;
-    border-bottom:1px solid var(--border);
-  }
-  .sb-label{
-    font-size:9px;font-weight:700;letter-spacing:.16em;
-    text-transform:uppercase;color:var(--pl);margin-bottom:6px;
-  }
-  .sb-name{font-size:15px;font-weight:800;color:var(--tx);line-height:1.25}
-  .sb-price{
-    display:inline-flex;align-items:center;gap:6px;
-    margin-top:10px;padding:4px 12px;
-    background:var(--g);border-radius:20px;
-    font-size:11px;font-weight:700;color:#fff;
-  }
+/* SECTION LABELS */
+.section-label { display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--purple-light); margin-bottom: 16px; }
+.section-title { font-size: clamp(36px, 5vw, 58px); font-weight: 900; margin-bottom: 20px; }
+.section-sub { font-size: 18px; color: var(--muted); max-width: 620px; margin-bottom: 56px; line-height: 1.7; }
 
-  .sb-group{
-    padding:18px 16px 4px;
-    font-size:9px;font-weight:700;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--tx3);
-  }
+/* CARDS */
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: border-color 0.3s, background 0.3s, transform 0.2s; }
+.card:hover { border-color: rgba(124,58,237,0.3); background: rgba(255,255,255,0.055); transform: translateY(-2px); }
 
-  .sb-link{
-    display:flex;align-items:center;gap:10px;
-    padding:9px 16px;margin:2px 10px;
-    border-radius:var(--r-sm);
-    color:var(--tx2);text-decoration:none;
-    font-size:13px;font-weight:500;cursor:pointer;
-    transition:background .15s,color .15s;
-    border:none;background:none;width:calc(100% - 20px);text-align:left;
-  }
-  .sb-link:hover{background:var(--border);color:var(--tx)}
-  .sb-link.active{
-    background:var(--glow);color:var(--pl);font-weight:600;
-  }
-  .sb-link .ico{font-size:15px;opacity:.7;flex-shrink:0}
-  .sb-link.active .ico{opacity:1}
+/* GRIDS */
+.grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 24px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
 
-  /* ─── MAIN ──────────────────────────────── */
-  #main{
-    flex:1;height:100vh;overflow-y:auto;
-  }
+/* ===== HERO ===== */
+.hero { min-height: 100vh; display: flex; align-items: center; padding: 130px 0 100px; position: relative; overflow: hidden; }
+.hero-glow { position: absolute; top: -300px; left: 50%; transform: translateX(-50%); width: 900px; height: 900px; pointer-events: none; background: radial-gradient(ellipse at center, rgba(124,58,237,0.14) 0%, transparent 65%); }
+.hero-line { position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent 0%, rgba(124,58,237,0.5) 50%, transparent 100%); }
+.hero-content { max-width: 880px; position: relative; z-index: 1; }
+.hero-tag { margin-bottom: 28px; }
+.hero h1 { font-size: clamp(50px, 7.5vw, 92px); font-weight: 900; line-height: 1.03; margin-bottom: 30px; }
+.hero-sub { font-size: clamp(17px, 2.2vw, 22px); color: var(--muted); max-width: 660px; margin-bottom: 52px; line-height: 1.75; font-weight: 400; }
+.hero-stats { display: flex; gap: 52px; margin-bottom: 52px; flex-wrap: wrap; }
+.hero-stat-num { font-size: 42px; font-weight: 900; line-height: 1; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 4px; }
+.hero-stat-label { font-size: 13px; color: var(--muted); font-weight: 500; }
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
 
-  /* ─── SECTION ───────────────────────────── */
-  .view{display:none;min-height:100vh}
-  .view.active{display:block}
+/* ===== PAIN CARDS ===== */
+.pain-card { background: rgba(239,68,68,0.04); border: 1px solid rgba(239,68,68,0.14); border-radius: 16px; padding: 32px; transition: border-color 0.3s; }
+.pain-card:hover { border-color: rgba(239,68,68,0.28); }
+.pain-icon { width: 48px; height: 48px; border-radius: 12px; background: rgba(239,68,68,0.12); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 20px; }
 
-  .view-hero{
-    padding:48px 56px 32px;
-    border-bottom:1px solid var(--border);
-  }
-  .view-tag{
-    display:inline-flex;align-items:center;gap:6px;
-    padding:4px 12px;border-radius:20px;
-    background:var(--glow);border:1px solid rgba(168,85,247,.25);
-    font-size:10px;font-weight:700;letter-spacing:.1em;
-    text-transform:uppercase;color:var(--pl);
-    margin-bottom:16px;
-  }
-  .view-title{
-    font-size:32px;font-weight:800;line-height:1.15;
-    color:var(--tx);letter-spacing:-.02em;margin-bottom:8px;
-  }
-  .view-title span{
-    background:var(--g);-webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;background-clip:text;
-  }
-  .view-sub{font-size:15px;color:var(--tx2);max-width:560px}
+/* ===== PILARES ===== */
+.pilar-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 40px 32px; position: relative; overflow: hidden; transition: border-color 0.3s, background 0.3s; }
+.pilar-card:hover { border-color: rgba(124,58,237,0.3); background: rgba(255,255,255,0.055); }
+.pilar-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--gradient); }
+.pilar-num { position: absolute; right: 24px; top: 12px; font-size: 72px; font-weight: 900; line-height: 1; opacity: 0.06; pointer-events: none; }
+.pilar-icon { width: 52px; height: 52px; border-radius: 14px; background: var(--gradient); display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 24px; }
 
-  .view-body{padding:40px 56px 64px}
+/* ===== FUNNEL ===== */
+.funnel-wrapper { margin-top: 52px; position: relative; border: 1px solid rgba(124,58,237,0.18); border-radius: 20px; overflow: hidden; background: #0b0b18; }
+.funnel-toolbar { position: absolute; top: 14px; right: 14px; display: flex; gap: 8px; z-index: 10; }
+.funnel-btn { width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); color: white; font-size: 18px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; font-family: var(--font); }
+.funnel-btn:hover { background: rgba(124,58,237,0.25); border-color: rgba(124,58,237,0.5); }
+.funnel-legend { position: absolute; bottom: 14px; left: 16px; display: flex; gap: 18px; z-index: 10; flex-wrap: wrap; }
+.legend-item { display: flex; align-items: center; gap: 7px; font-size: 11px; color: rgba(255,255,255,0.4); }
+.legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.funnel-hint { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); font-size: 11px; color: rgba(255,255,255,0.3); pointer-events: none; white-space: nowrap; }
+#funnel-svg { display: block; width: 100%; cursor: grab; user-select: none; }
+#funnel-svg:active { cursor: grabbing; }
 
-  /* ─── CARDS ─────────────────────────────── */
-  .card{
-    background:var(--surf);border:1px solid var(--border);
-    border-radius:var(--r);padding:24px 28px;
-  }
-  .card-label{
-    font-size:10px;font-weight:700;letter-spacing:.1em;
-    text-transform:uppercase;color:var(--tx3);margin-bottom:10px;
-  }
-  .card-val{font-size:26px;font-weight:800;color:var(--tx)}
-  .card-sub{font-size:12px;color:var(--tx2);margin-top:5px;line-height:1.5}
+/* ===== MODULES ===== */
+.module-num { font-size: 11px; font-weight: 700; color: var(--purple-light); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; }
+.module-title { font-size: 19px; font-weight: 800; margin-bottom: 16px; }
+.module-topics { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+.module-topics li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--muted); line-height: 1.5; }
+.module-topics li::before { content: '→'; color: var(--purple-light); flex-shrink: 0; margin-top: 1px; }
 
-  .card-p{border-color:rgba(168,85,247,.25);background:rgba(124,58,237,.06)}
-  .card-g{border-color:rgba(16,185,129,.25);background:rgba(16,185,129,.05)}
-  .card-y{border-color:rgba(245,158,11,.25);background:rgba(245,158,11,.05)}
+/* ===== AVATARES ===== */
+.avatar-tabs { display: flex; gap: 8px; margin-bottom: 28px; flex-wrap: wrap; }
+.avatar-tab { padding: 10px 22px; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; border: 1px solid var(--border); background: transparent; color: var(--muted); transition: all 0.2s; font-family: var(--font); }
+.avatar-tab.active, .avatar-tab:hover { background: rgba(124,58,237,0.12); border-color: rgba(124,58,237,0.4); color: var(--purple-light); }
+.avatar-content { display: none; }
+.avatar-content.active { display: block; }
+.avatar-card { background: var(--surface); border: 1px solid rgba(124,58,237,0.2); border-radius: 20px; padding: 40px; }
+.avatar-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 32px; }
+.avatar-col-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px; }
+.avatar-items { display: flex; flex-direction: column; gap: 10px; }
+.avatar-item { display: flex; align-items: flex-start; gap: 12px; padding: 13px 16px; border-radius: 10px; font-size: 14px; color: rgba(248,248,252,0.75); line-height: 1.5; }
+.avatar-item-pain { background: rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.12); }
+.avatar-item-sol { background: rgba(124,58,237,0.05); border: 1px solid rgba(124,58,237,0.14); }
 
-  /* ─── GRID ──────────────────────────────── */
-  .g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  .g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
-  .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+/* ===== REVENUE ===== */
+.revenue-stack { display: flex; flex-direction: column; gap: 14px; max-width: 820px; margin: 0 auto; }
+.revenue-row { display: flex; align-items: center; gap: 20px; padding: 24px 28px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; transition: all 0.3s; }
+.revenue-row:hover { border-color: rgba(124,58,237,0.3); background: rgba(255,255,255,0.055); }
+.revenue-icon { width: 50px; height: 50px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.revenue-info { flex: 1; }
+.revenue-name { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.revenue-desc { font-size: 13px; color: var(--muted); }
+.revenue-value { text-align: right; flex-shrink: 0; }
+.revenue-amount { font-size: 22px; font-weight: 900; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.revenue-type { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
+.revenue-total { margin-top: 6px; padding: 28px 32px; background: var(--gradient); border-radius: 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.revenue-total-label { font-size: 17px; font-weight: 700; color: white; }
+.revenue-total-value { font-size: 36px; font-weight: 900; color: white; }
 
-  /* ─── DIVIDER ───────────────────────────── */
-  .div{height:1px;background:var(--border);margin:28px 0}
+/* ===== DELIVERABLES ===== */
+.deliverable-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; }
+.deliverable-item { display: flex; align-items: flex-start; gap: 14px; padding: 18px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; }
+.check-icon { width: 28px; height: 28px; border-radius: 8px; background: rgba(124,58,237,0.14); border: 1px solid rgba(124,58,237,0.28); display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+.deliverable-text { font-size: 14px; color: rgba(248,248,252,0.82); line-height: 1.55; }
 
-  /* ─── BADGE / TAG ───────────────────────── */
-  .tag{
-    display:inline-block;padding:3px 10px;border-radius:20px;
-    font-size:11px;font-weight:600;
-  }
-  .tag-p{background:rgba(124,58,237,.18);color:var(--pl)}
-  .tag-g{background:rgba(16,185,129,.15);color:var(--greenl)}
-  .tag-y{background:rgba(245,158,11,.15);color:var(--yellow)}
-  .tag-r{background:rgba(239,68,68,.15);color:#f87171}
+/* ===== CTA ===== */
+.cta-section { text-align: center; padding: 140px 0; position: relative; overflow: hidden; }
+.cta-glow { position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 700px; height: 500px; pointer-events: none; background: radial-gradient(ellipse at center, rgba(124,58,237,0.12) 0%, transparent 70%); }
+.cta-title { font-size: clamp(42px, 6.5vw, 76px); font-weight: 900; margin-bottom: 24px; }
+.cta-sub { font-size: 18px; color: var(--muted); max-width: 520px; margin: 0 auto 48px; line-height: 1.7; }
+.cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+footer { border-top: 1px solid var(--border); padding: 44px 0; text-align: center; color: var(--muted); font-size: 13px; line-height: 1.8; }
 
-  /* ─── CALLOUT ───────────────────────────── */
-  .callout{
-    border-radius:var(--r);padding:20px 24px;margin:16px 0;
-    border:1px solid;
-  }
-  .callout-p{background:rgba(124,58,237,.08);border-color:rgba(168,85,247,.3)}
-  .callout-g{background:rgba(16,185,129,.07);border-color:rgba(16,185,129,.3)}
-  .callout-y{background:rgba(245,158,11,.07);border-color:rgba(245,158,11,.3)}
-  .callout .c-label{
-    font-size:9px;font-weight:700;letter-spacing:.12em;
-    text-transform:uppercase;margin-bottom:8px;
-  }
-  .callout-p .c-label{color:var(--pl)}
-  .callout-g .c-label{color:var(--greenl)}
-  .callout-y .c-label{color:var(--yellow)}
-  .callout .c-text{font-size:14px;color:var(--tx);line-height:1.65}
-
-  /* ─── SECTION LABEL ─────────────────────── */
-  .sec-label{
-    font-size:10px;font-weight:700;letter-spacing:.12em;
-    text-transform:uppercase;color:var(--tx3);margin-bottom:16px;
-  }
-
-  /* ─── TABLE ─────────────────────────────── */
-  .tbl{width:100%;border-collapse:collapse;font-size:13px}
-  .tbl th{
-    text-align:left;padding:10px 14px;
-    font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-    color:var(--tx3);border-bottom:1px solid var(--border);
-  }
-  .tbl td{
-    padding:13px 14px;border-bottom:1px solid var(--border);
-    color:var(--tx);vertical-align:top;
-  }
-  .tbl tr:last-child td{border-bottom:none}
-  .tbl tbody tr:hover td{background:rgba(255,255,255,.015)}
-
-  /* ─── STEP (metodologia) ────────────────── */
-  .step{
-    display:flex;gap:20px;padding:24px 0;
-    border-bottom:1px solid var(--border);
-  }
-  .step:last-child{border-bottom:none}
-  .step-num{
-    width:38px;height:38px;flex-shrink:0;border-radius:10px;
-    background:var(--g);display:flex;align-items:center;justify-content:center;
-    font-size:15px;font-weight:800;color:#fff;margin-top:2px;
-  }
-  .step-body{}
-  .step-title{font-size:16px;font-weight:700;margin-bottom:4px}
-  .step-sub{font-size:12px;color:var(--tx2);margin-bottom:10px}
-  .step-items{
-    font-size:13px;color:var(--tx2);
-    padding-left:16px;
-  }
-  .step-items li{margin-bottom:4px;line-height:1.5}
-  .step-out{
-    margin-top:12px;padding:8px 14px;
-    background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.2);
-    border-radius:var(--r-sm);font-size:12px;
-    color:var(--greenl);font-weight:600;
-  }
-  .step-out span{color:var(--tx2);font-weight:400}
-
-  /* ─── MODULO / AULA ─────────────────────── */
-  .modulo{margin-bottom:6px}
-  .mod-header{
-    display:flex;align-items:center;gap:10px;
-    padding:13px 18px;background:var(--surf2);
-    border:1px solid var(--border);border-radius:var(--r-sm);
-    cursor:pointer;user-select:none;transition:border-color .15s;
-  }
-  .mod-header:hover{border-color:var(--border2)}
-  .mod-header.open{
-    border-color:rgba(168,85,247,.3);
-    border-bottom-left-radius:0;border-bottom-right-radius:0;
-  }
-  .mod-num{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--tx3)}
-  .mod-title{font-size:13px;font-weight:700;flex:1}
-  .mod-badge{
-    padding:2px 8px;background:var(--glow);
-    border-radius:20px;font-size:10px;font-weight:700;color:var(--pl);
-  }
-  .mod-count{font-size:11px;color:var(--tx2);margin-left:4px}
-  .mod-arrow{font-size:11px;color:var(--tx3);transition:transform .2s;flex-shrink:0}
-  .mod-header.open .mod-arrow{transform:rotate(180deg)}
-
-  .mod-body{
-    background:var(--surf);
-    border:1px solid rgba(168,85,247,.2);border-top:none;
-    border-bottom-left-radius:var(--r-sm);border-bottom-right-radius:var(--r-sm);
-    display:none;
-  }
-  .mod-body.open{display:block}
-
-  .aula{
-    display:grid;grid-template-columns:48px 1fr;gap:12px;
-    padding:14px 18px;border-bottom:1px solid var(--border);
-    align-items:start;
-  }
-  .aula:last-child{border-bottom:none}
-  .aula-n{font-size:10px;font-weight:700;color:var(--tx3);padding-top:2px}
-  .aula-title{font-size:13px;font-weight:600}
-  .aula-desc{font-size:12px;color:var(--tx2);margin-top:3px;line-height:1.5}
-
-  /* ─── AVATAR TABS ───────────────────────── */
-  .av-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
-  .av-tab{
-    padding:8px 18px;border-radius:var(--r-sm);
-    border:1px solid var(--border);background:var(--surf);
-    color:var(--tx2);font-size:13px;font-weight:600;
-    cursor:pointer;transition:all .15s;
-  }
-  .av-tab:hover{border-color:var(--border2);color:var(--tx)}
-  .av-tab.active{background:var(--glow);border-color:rgba(168,85,247,.4);color:var(--pl)}
-
-  .av-panel{display:none}
-  .av-panel.active{display:block}
-
-  /* ─── DORES ─────────────────────────────── */
-  .dore{
-    padding:14px 18px;border-radius:var(--r-sm);
-    border:1px solid var(--border);background:var(--surf);
-    margin-bottom:6px;
-  }
-  .dore-title{font-size:13px;font-weight:700;margin-bottom:4px}
-  .dore-desc{font-size:12px;color:var(--tx2);line-height:1.5}
-  .dore-hook{margin-top:6px;font-size:11px;color:var(--greenl);font-weight:600}
-
-  /* ─── FUNIL DIAGRAM ─────────────────────── */
-  .funnel-wrap{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:16px}
-  .fn-col{}
-  .fn-col-title{
-    font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-    padding-bottom:12px;text-align:center;
-  }
-  .fn-box{
-    background:var(--surf);border:1px solid var(--border);
-    border-radius:var(--r-sm);padding:12px 14px;
-    text-align:center;margin-bottom:0;
-  }
-  .fn-box.hi-p{background:rgba(124,58,237,.09);border-color:rgba(168,85,247,.35)}
-  .fn-box.hi-g{background:rgba(16,185,129,.07);border-color:rgba(16,185,129,.3)}
-  .fn-box .fn-name{font-size:12px;font-weight:700;line-height:1.3}
-  .fn-box .fn-note{font-size:10px;color:var(--tx2);margin-top:3px}
-  .fn-box .fn-price{font-size:11px;font-weight:700;margin-top:4px}
-  .fn-arrow{text-align:center;color:var(--tx3);padding:5px 0;font-size:16px;line-height:1}
-  .fn-arrow-note{font-size:9px;color:var(--tx3);text-align:center;margin-top:-2px;padding-bottom:4px}
-
-  .fn-merge{
-    grid-column:1/-1;text-align:center;
-    color:var(--tx3);font-size:12px;padding:8px 0;
-  }
-  .fn-main-box{
-    grid-column:1/-1;
-    background:linear-gradient(135deg,rgba(124,58,237,.2),rgba(168,85,247,.12));
-    border:1px solid rgba(168,85,247,.5);
-    border-radius:var(--r);padding:20px 28px;text-align:center;
-  }
-  .fn-main-box .fn-main-title{font-size:18px;font-weight:800}
-  .fn-main-box .fn-main-price{font-size:16px;font-weight:700;color:var(--pl);margin-top:4px}
-  .fn-main-box .fn-main-sub{font-size:12px;color:var(--tx2);margin-top:4px}
-
-  .fn-ups{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .fn-up{
-    background:var(--surf);border:1px solid var(--border);
-    border-radius:var(--r-sm);padding:16px 18px;text-align:center;
-  }
-  .fn-up .fn-name{font-size:13px;font-weight:700}
-  .fn-up .fn-price{font-size:12px;font-weight:700;color:var(--yellow);margin-top:4px}
-  .fn-up .fn-note{font-size:11px;color:var(--tx2);margin-top:4px;line-height:1.4}
-
-  /* ─── REVENUE STACK ─────────────────────── */
-  .rev-row{
-    display:flex;justify-content:space-between;align-items:center;
-    padding:16px 20px;border-bottom:1px solid var(--border);gap:12px;
-  }
-  .rev-row:last-child{border-bottom:none}
-  .rev-name{font-size:14px;font-weight:700}
-  .rev-type{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
-  .rev-desc{font-size:12px;color:var(--tx2);margin-top:2px}
-  .rev-bar-wrap{flex:1;max-width:200px;margin:0 20px}
-  .rev-bar{height:5px;background:var(--border);border-radius:3px;overflow:hidden}
-  .rev-bar-fill{height:100%;border-radius:3px}
-  .rev-val{text-align:right;white-space:nowrap}
-  .rev-val .v-main{font-size:15px;font-weight:800}
-  .rev-val .v-sub{font-size:11px;color:var(--tx2);margin-top:2px}
-
-  /* ─── CRON ──────────────────────────────── */
-  .cron-month{
-    background:var(--surf);border:1px solid var(--border);
-    border-radius:var(--r);margin-bottom:10px;overflow:hidden;
-  }
-  .cron-head{
-    display:flex;align-items:center;gap:12px;
-    padding:14px 20px;border-bottom:1px solid var(--border);
-    background:var(--surf2);
-  }
-  .cron-dot{
-    width:8px;height:8px;border-radius:50%;flex-shrink:0;
-  }
-  .cron-month-name{font-size:14px;font-weight:700}
-  .cron-focus{font-size:12px;color:var(--tx2);margin-left:auto}
-  .cron-tasks{padding:14px 20px}
-  .cron-task{display:flex;gap:10px;margin-bottom:8px;font-size:13px;align-items:start}
-  .cron-task:last-child{margin-bottom:0}
-  .who{
-    padding:2px 8px;border-radius:4px;
-    font-size:9px;font-weight:700;text-transform:uppercase;
-    letter-spacing:.06em;white-space:nowrap;flex-shrink:0;
-  }
-  .who-e{background:rgba(124,58,237,.2);color:var(--pl)}
-  .who-m{background:rgba(16,185,129,.15);color:var(--greenl)}
-  .who-a{background:rgba(245,158,11,.15);color:var(--yellow)}
-  .cron-text{color:var(--tx2);line-height:1.4}
-
-  /* ─── CRUZER GRID ───────────────────────── */
-  .crz{
-    display:grid;grid-template-columns:repeat(5,1fr) auto;
-    border:1px solid var(--border);border-radius:var(--r);overflow:hidden;
-  }
-  .crz-item{
-    padding:16px 14px;border-right:1px solid var(--border);
-  }
-  .crz-item:last-child{
-    border-right:none;padding:16px 20px;
-    background:linear-gradient(135deg,rgba(124,58,237,.15),rgba(16,185,129,.1));
-  }
-  .crz-label{font-size:10px;color:var(--tx2);margin-bottom:6px}
-  .crz-val{font-size:18px;font-weight:800}
-  .crz-sub{font-size:10px;color:var(--tx3);margin-top:3px}
-
-  /* ─── ROW LV ────────────────────────────── */
-  .lv{display:flex;gap:8px;margin-bottom:8px;font-size:13px}
-  .lv-k{color:var(--tx2);min-width:160px;flex-shrink:0}
-  .lv-v{color:var(--tx);font-weight:500}
+@media (max-width: 900px) {
+  .grid-3, .grid-2, .avatar-two-col, .deliverable-grid { grid-template-columns: 1fr; }
+  nav { padding: 14px 20px; }
+  .section { padding: 80px 0; }
+  .hero { padding: 100px 0 70px; }
+  .hero-stats { gap: 28px; }
+  .revenue-row { flex-wrap: wrap; }
+}
+@media (max-width: 600px) {
+  .hero h1 { font-size: 44px; }
+  .hero-actions, .cta-actions { flex-direction: column; align-items: flex-start; }
+  .cta-actions { align-items: center; }
+}
 </style>
 </head>
 <body>
 
-<!-- ════════════════════ SIDEBAR ════════════════════ -->
-<nav id="sidebar">
-  <div class="sb-brand">
-    <div class="sb-label">Arrive In Digital</div>
-    <div class="sb-name">Mentoria Imob<br>In Digital</div>
-    <div class="sb-price">R$ 1.497 / ano</div>
-  </div>
-
-  <div class="sb-group">Produto</div>
-  <button class="sb-link active" data-view="visao"><span class="ico">📦</span>Visão Geral</button>
-  <button class="sb-link" data-view="funis"><span class="ico">🔀</span>Funis & Ecossistema</button>
-  <button class="sb-link" data-view="formato"><span class="ico">📅</span>Formato & Ritmo</button>
-
-  <div class="sb-group">Inteligência</div>
-  <button class="sb-link" data-view="publico"><span class="ico">🎯</span>Público & Avatares</button>
-  <button class="sb-link" data-view="narrativa"><span class="ico">💬</span>Narrativa</button>
-
-  <div class="sb-group">Metodologia</div>
-  <button class="sb-link" data-view="metodologia"><span class="ico">⚙️</span>Os 5 Passos</button>
-  <button class="sb-link" data-view="grade"><span class="ico">🎬</span>Grade de Aulas</button>
-
-  <div class="sb-group">Estratégia</div>
-  <button class="sb-link" data-view="potencial"><span class="ico">📈</span>Potencial & Receita</button>
-  <button class="sb-link" data-view="execucao"><span class="ico">🗓</span>Execução</button>
+<nav id="navbar">
+  <a class="nav-logo" href="#">
+    <div class="nav-logo-icon">A</div>
+    Arrive In Digital
+  </a>
+  <a href="#cta" class="btn btn-primary btn-sm">Quero participar</a>
 </nav>
 
-<!-- ════════════════════ MAIN ════════════════════ -->
-<main id="main">
-
-<!-- ── VISÃO GERAL ── -->
-<div class="view active" id="view-visao">
-  <div class="view-hero">
-    <div class="view-tag">📦 Produto</div>
-    <div class="view-title">Mentoria <span>Imob In Digital</span></div>
-    <div class="view-sub">Sistema completo de presença digital para o mercado imobiliário — do posicionamento ao tráfego pago, com acompanhamento semanal.</div>
-  </div>
-  <div class="view-body">
-
-    <div class="g4" style="margin-bottom:24px">
-      <div class="card card-p">
-        <div class="card-label">Preço</div>
-        <div class="card-val">R$ 1.497</div>
-        <div class="card-sub">Plano anual · Hotmart</div>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-line"></div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-tag">
+        <span class="tag tag-purple">🏆 Mentoria Exclusiva · Turmas Fechadas</span>
       </div>
-      <div class="card">
-        <div class="card-label">Formato</div>
-        <div class="card-val" style="font-size:20px">Grupo online</div>
-        <div class="card-sub">2 lives por semana</div>
+      <h1>O Ecossistema Completo<br>do <span class="gradient-text">Corretor Digital</span></h1>
+      <p class="hero-sub">A única mentoria do mercado imobiliário que entrega metodologia, funis prontos, tráfego gerenciado e software exclusivo — tudo integrado, da captação ao fechamento.</p>
+      <div class="hero-stats">
+        <div><div class="hero-stat-num">+200</div><div class="hero-stat-label">Estruturas testadas</div></div>
+        <div><div class="hero-stat-num">3</div><div class="hero-stat-label">Funis de entrada</div></div>
+        <div><div class="hero-stat-num">60</div><div class="hero-stat-label">Dias acompanhados</div></div>
+        <div><div class="hero-stat-num">R$0</div><div class="hero-stat-label">Taxa extra em ads</div></div>
       </div>
-      <div class="card">
-        <div class="card-label">Meta 1ª Turma</div>
-        <div class="card-val" style="font-size:20px">10 alunos</div>
-        <div class="card-sub">Prova social + validação</div>
-      </div>
-      <div class="card">
-        <div class="card-label">Plataforma</div>
-        <div class="card-val" style="font-size:20px">Hotmart</div>
-        <div class="card-sub">Área de membros</div>
+      <div class="hero-actions">
+        <a href="#cta" class="btn btn-primary">Ver como entrar →</a>
+        <a href="#funil" class="btn btn-outline">Ver o ecossistema</a>
       </div>
     </div>
+  </div>
+</section>
 
-    <div class="g2" style="margin-bottom:24px">
-      <div class="card">
-        <div class="card-label">Para quem é</div>
-        <div style="font-size:15px;font-weight:700;margin-bottom:8px;line-height:1.35">Corretores, donos de imobiliária, incorporadores e construtores regionais</div>
-        <div style="font-size:13px;color:var(--tx2)">Qualquer profissional do mercado imobiliário que ainda não tem sistema digital estruturado — depende de indicação, portal ou sorte para gerar lead.</div>
+<!-- PROBLEM -->
+<section class="section" style="background:linear-gradient(180deg,transparent 0%,rgba(124,58,237,0.04) 50%,transparent 100%)">
+  <div class="container">
+    <span class="section-label">O problema</span>
+    <h2 class="section-title">Por que a maioria dos corretores<br>ainda depende de indicação?</h2>
+    <p class="section-sub">Sem sistema, sem previsibilidade. A roda gira — mas só enquanto você empurra.</p>
+    <div class="grid-3">
+      <div class="pain-card">
+        <div class="pain-icon">🎲</div>
+        <h3 style="font-size:20px;font-weight:800;margin-bottom:10px">Zero previsibilidade</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.75">Mês bom, mês ruim. Sem funil estruturado, seu faturamento depende de sorte — não de sistema.</p>
       </div>
-      <div class="card">
-        <div class="card-label">Posição no ecossistema</div>
-        <div style="font-size:13px;color:var(--tx2);margin-bottom:12px">Produto âncora — alimentado por 3 fontes de captação simultâneas.</div>
-        <div style="display:flex;flex-direction:column;gap:6px">
-          <div style="display:flex;align-items:center;gap:8px;font-size:13px"><span class="tag tag-p">Live semanal</span><span style="color:var(--tx2)">pitch no final da live</span></div>
-          <div style="display:flex;align-items:center;gap:8px;font-size:13px"><span class="tag tag-g">Low ticket</span><span style="color:var(--tx2)">upsell após compra</span></div>
-          <div style="display:flex;align-items:center;gap:8px;font-size:13px"><span class="tag tag-y">Workshop</span><span style="color:var(--tx2)">pitch no Dia 2 (futuro)</span></div>
+      <div class="pain-card">
+        <div class="pain-icon">🌀</div>
+        <h3 style="font-size:20px;font-weight:800;margin-bottom:10px">Leads frios sem qualidade</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.75">Portais cobram caro por leads que só querem "ver". Sem qualificação, você gasta energia em quem nunca vai comprar.</p>
+      </div>
+      <div class="pain-card">
+        <div class="pain-icon">⌛</div>
+        <h3 style="font-size:20px;font-weight:800;margin-bottom:10px">Tempo perdido sem retorno</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.75">Follow-up manual, sem automação, sem sistema. Cada lead exige esforço do zero — sem escala, sem vida.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METODOLOGIA -->
+<section class="section">
+  <div class="container">
+    <span class="section-label">A metodologia</span>
+    <h2 class="section-title">Estrutura → Posicionamento → Tráfego</h2>
+    <p class="section-sub">Essa é a ordem que não muda. Cada pilar depende do anterior. Sem estrutura, tráfego é desperdício.</p>
+    <div class="grid-3">
+      <div class="pilar-card">
+        <div class="pilar-num">01</div>
+        <div class="pilar-icon">🏗️</div>
+        <h3 style="font-size:22px;font-weight:800;margin-bottom:12px">Estrutura</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.75">Posicionamento de marca, design system, landing pages de alta conversão e automações de qualificação. Tudo antes de qualquer real em tráfego.</p>
+      </div>
+      <div class="pilar-card">
+        <div class="pilar-num">02</div>
+        <div class="pilar-icon">🎯</div>
+        <h3 style="font-size:22px;font-weight:800;margin-bottom:12px">Posicionamento</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.75">Definição de nicho, ICP, mensagem central e autoridade digital. Quem você é, para quem serve — e por que comprar de você, não do concorrente.</p>
+      </div>
+      <div class="pilar-card">
+        <div class="pilar-num">03</div>
+        <div class="pilar-icon">📈</div>
+        <h3 style="font-size:22px;font-weight:800;margin-bottom:12px">Tráfego</h3>
+        <p style="font-size:14px;color:var(--muted);line-height:1.75">Campanhas no Meta Ads gerenciadas pela equipe Arrive. Leads qualificados entrando no funil todos os dias — automaticamente.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FUNNEL DIAGRAM -->
+<section class="section" id="funil" style="padding-top:80px;padding-bottom:100px">
+  <div class="container">
+    <span class="section-label">O ecossistema</span>
+    <h2 class="section-title">3 Funis de Entrada.<br><span class="gradient-text">Uma Máquina Integrada.</span></h2>
+    <p class="section-sub">Cada funil qualifica, educa e converte — apontando para o mesmo destino. Scroll para zoom · arraste para mover.</p>
+  </div>
+  <div class="container" style="max-width:1340px">
+    <div class="funnel-wrapper">
+      <div class="funnel-toolbar">
+        <button class="funnel-btn" id="zoomIn">+</button>
+        <button class="funnel-btn" id="zoomOut">−</button>
+        <button class="funnel-btn" id="zoomReset" style="font-size:14px">↺</button>
+      </div>
+      <div class="funnel-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#7c3aed"></div>Live Semanal</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#db2777"></div>Low Ticket</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#0891b2"></div>Workshop</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#f59e0b"></div>Mentoria + Produtos</div>
+      </div>
+      <svg id="funnel-svg" viewBox="0 0 1100 920" height="700">
+        <defs>
+          <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
+            <path d="M 36 0 L 0 0 0 36" fill="none" stroke="rgba(255,255,255,0.035)" stroke-width="1"/>
+          </pattern>
+          <marker id="av" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="rgba(124,58,237,0.7)"/></marker>
+          <marker id="ap" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="rgba(219,39,119,0.7)"/></marker>
+          <marker id="ac" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="rgba(8,145,178,0.7)"/></marker>
+          <marker id="ag" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="rgba(22,163,74,0.8)"/></marker>
+          <marker id="ao" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="rgba(245,158,11,0.8)"/></marker>
+          <linearGradient id="mg" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#7c3aed"/>
+            <stop offset="100%" stop-color="#db2777"/>
+          </linearGradient>
+        </defs>
+        <g id="cvs">
+          <rect width="1100" height="920" fill="url(#grid)"/>
+
+          <!-- COLUMN HEADERS -->
+          <rect x="28" y="16" width="194" height="30" rx="8" fill="rgba(124,58,237,0.12)" stroke="rgba(124,58,237,0.28)" stroke-width="1"/>
+          <text x="125" y="36" text-anchor="middle" fill="#a855f7" font-size="11" font-weight="700" font-family="system-ui" letter-spacing="1">LIVE SEMANAL</text>
+          <rect x="353" y="16" width="194" height="30" rx="8" fill="rgba(219,39,119,0.12)" stroke="rgba(219,39,119,0.28)" stroke-width="1"/>
+          <text x="450" y="36" text-anchor="middle" fill="#f472b6" font-size="11" font-weight="700" font-family="system-ui" letter-spacing="1">LOW TICKET</text>
+          <rect x="678" y="16" width="194" height="30" rx="8" fill="rgba(8,145,178,0.12)" stroke="rgba(8,145,178,0.28)" stroke-width="1"/>
+          <text x="775" y="36" text-anchor="middle" fill="#22d3ee" font-size="11" font-weight="700" font-family="system-ui" letter-spacing="1">WORKSHOP</text>
+
+          <!-- VERTICAL CONNECTIONS -->
+          <path d="M125,136 C125,162 125,177 125,193" stroke="rgba(124,58,237,0.55)" stroke-width="1.8" fill="none" marker-end="url(#av)"/>
+          <path d="M125,267 C125,293 125,308 125,323" stroke="rgba(124,58,237,0.55)" stroke-width="1.8" fill="none" marker-end="url(#av)"/>
+          <path d="M125,397 C125,423 125,438 125,453" stroke="rgba(124,58,237,0.55)" stroke-width="1.8" fill="none" marker-end="url(#av)"/>
+          <path d="M450,136 C450,162 450,177 450,193" stroke="rgba(219,39,119,0.55)" stroke-width="1.8" fill="none" marker-end="url(#ap)"/>
+          <path d="M450,267 C450,293 450,308 450,323" stroke="rgba(219,39,119,0.55)" stroke-width="1.8" fill="none" marker-end="url(#ap)"/>
+          <path d="M450,397 C450,423 450,438 450,453" stroke="rgba(219,39,119,0.55)" stroke-width="1.8" fill="none" marker-end="url(#ap)"/>
+          <path d="M775,136 C775,162 775,177 775,193" stroke="rgba(8,145,178,0.55)" stroke-width="1.8" fill="none" marker-end="url(#ac)"/>
+          <path d="M775,267 C775,293 775,308 775,323" stroke="rgba(8,145,178,0.55)" stroke-width="1.8" fill="none" marker-end="url(#ac)"/>
+          <path d="M775,397 C775,423 775,438 775,453" stroke="rgba(8,145,178,0.55)" stroke-width="1.8" fill="none" marker-end="url(#ac)"/>
+
+          <!-- CONVERGE TO MENTORIA -->
+          <path d="M125,527 C125,590 450,580 450,632" stroke="rgba(124,58,237,0.45)" stroke-width="2" fill="none" stroke-dasharray="7,4" marker-end="url(#av)"/>
+          <path d="M450,527 C450,565 450,600 450,632" stroke="rgba(219,39,119,0.45)" stroke-width="2" fill="none" stroke-dasharray="7,4" marker-end="url(#ap)"/>
+          <path d="M775,527 C775,590 450,580 450,632" stroke="rgba(8,145,178,0.45)" stroke-width="2" fill="none" stroke-dasharray="7,4" marker-end="url(#ac)"/>
+
+          <!-- MENTORIA TO UPSELLS -->
+          <path d="M388,724 C340,762 250,778 250,793" stroke="rgba(22,163,74,0.7)" stroke-width="2" fill="none" marker-end="url(#ag)"/>
+          <path d="M512,724 C560,762 750,778 750,793" stroke="rgba(245,158,11,0.7)" stroke-width="2" fill="none" marker-end="url(#ao)"/>
+
+          <!-- LIVE NODES -->
+          <g class="fn" transform="translate(28,66)"><rect width="194" height="68" rx="10" fill="#111120" stroke="rgba(124,58,237,0.38)" stroke-width="1.5"/><rect width="194" height="3" rx="2" fill="rgba(124,58,237,0.85)"/><text x="13" y="28" fill="white" font-size="12.5" font-weight="700" font-family="system-ui">📢 Anúncio Meta Ads</text><text x="13" y="48" fill="rgba(255,255,255,0.45)" font-size="11" font-family="system-ui">CPL R$15-25 · Alcance 15k/mês</text><circle cx="97" cy="68" r="4" fill="rgba(124,58,237,0.9)"/></g>
+          <g class="fn" transform="translate(28,196)"><rect width="194" height="68" rx="10" fill="#111120" stroke="rgba(124,58,237,0.38)" stroke-width="1.5"/><rect width="194" height="3" rx="2" fill="rgba(124,58,237,0.85)"/><circle cx="97" cy="0" r="4" fill="rgba(124,58,237,0.9)"/><text x="13" y="28" fill="white" font-size="12.5" font-weight="700" font-family="system-ui">📄 Landing Page</text><text x="13" y="48" fill="rgba(255,255,255,0.45)" font-size="11" font-family="system-ui">Conversão: 28-35%</text><circle cx="97" cy="68" r="4" fill="rgba(124,58,237,0.9)"/></g>
+          <g class="fn" transform="translate(28,326)"><rect width="194" height="68" rx="10" fill="#111120" stroke="rgba(124,58,237,0.38)" stroke-width="1.5"/><rect width="194" height="3" rx="2" fill="rgba(124,58,237,0.85)"/><circle cx="97" cy="0" r="4" fill="rgba(124,58,237,0.9)"/><text x="13" y="28" fill="white" font-size="12.5" font-weight="700" font-family="system-ui">👤 Lead Capturado</text><text x="13" y="48" fill="rgba(255,255,255,0.45)" font-size="11" font-family="system-ui">~120 leads / mês</text><circle cx="97" cy="68" r="4" fill="rgba(124,58,237,0.9)"/></g>
+          <g class="fn" transform="translate(28,456)"><rect width="194" height="68" rx="10" fill="#111120" stroke="rgba(124,58,237,0.5)" stroke-width="1.5"/><rect width="194" height="3" rx="2" fill="rgba(124,58,237,0.85)"/><circle cx="97" cy="0" r="4" fill="rgba(124,58,237,0.9)"/><text x="13" y="28" fill="white" font-size="12.5" font-weight="700" font-family="system-ui">🎥 Webinar ao Vivo</text><text x="13" y="48" fill="rgba(255,255,255,0.45)" font-size="11" font-family="system-ui">Conv. 18-25% → Mentoria</text><circle cx="97" cy="68" r="4" fill="rgba(124,58,237,0.6)"/></g>
+
+          <!-- LOW TICKET NODES -->
+          <g class="fn" transform="translate(353,66)"><rect width="194" height="68" rx="10" fill="#111120" stroke="rgba(219,39,119,0.38)" stroke-width="1.5"/><rect width="194" height="3" rx="2" fill="rgba(219,39,119,0.85)"/><text x="13" y="28" fill="white" font-size="12.5" font-weight="700" font-family="system-ui">📢 Anúncio Meta Ads</text><text x="13" y="48" fill="rgba(255,255,255,0.45)" font-size="11" font-family="system-ui">CPL R$8-15 · Volume alto</text><circle cx="97" cy="68" r="4" fill="rgba(219,39,119,0.9)"/></g>
+          <g class="fn" transform="translate(353,196)"><rect width="194" height="68" rx="10" fill="#111120" stroke="rgba(219,39,119,0.38)" stroke-width="1.5"/><rect width="194" height="3" rx="2" fill="rgba(219,39,119,0.85)"/><circle cx="97" cy="0" r="4" fill="rgba(219,39,119,0.9)"/><text x="13" y="28" fill="white" font-size="12.5" font-weight="700" font-family="system-ui">📄 Landing Page</text><text x="13" y="48" fill="rgba(255,255,255,0.45)" font-size="11" font-family="system-ui">Conversão: 32-42%</text><circle cx="97" cy="68" r="4" fill="rgba(219,39,119,0.9)"/></g>
+          <g class="fn" transform="translate(353,326)"><rect width="194" height="68" rx="10" fill="#111120" stroke="rgba(219,39,119,0.38)" stroke-width="1.5"/><rect width="194" height="3" rx="2" fill="rgba(219,39,119,0.85)"/><circle cx="97" cy="0" r="4" fill="rgba(219,39,119,0.9)"/><text x="13" y="28" fill="white" font-size="12.5" font-weight="700" font-family="system-ui">👤 Lead Capturado</text><text x="13" y="48" fill="rgba(255,255,255,0.45)" font-size="11" font-family="system-ui">~200 leads / mês</text><circle cx="97" cy="68" r="4" fill="rgba(219,39,119,0.9)"/></g>
+          <g class="fn" transform="translate(353,456)"><rect width="194" height="68" rx="10" fill="#111120" stroke="rgba(219,39,119,0.5)" stroke-width="1.5"/><rect width="194" height="3" rx="2" fill="rgba(219,39,119,0.85)"/><circle cx="97" cy="0" r="4" fill="rgba(219,39,119,0.9)"/><text x="13" y="28" fill="white" font-size="12.5" font-weight="700" font-family="system-ui">💰 Produto LT</text><text x="13" y="48" fill="rgba(255,255,255,0.45)" font-size="11" font-family="system-ui">R$97-197 · Upsell → Mentoria</text><circle cx="97" cy="68" r="4" fill="rgba(219,39,119,0.6)"/></g>
+
+          <!-- WORKSHOP NODES -->
+          <g class="fn" transform="translate(678,66)"><rect width="194" height="68" rx="10" fill="#111120" stroke="rgba(8,145,178,0.38)" stroke-width="1.5"/><rect width="194" height="3" rx="2" fill="rgba(8,145,178,0.85)"/><text x="13" y="28" fill="white" font-size="12.5" font-weight="700" font-family="system-ui">📢 Anúncio Meta Ads</text><text x="13" y="48" fill="rgba(255,255,255,0.45)" font-size="11" font-family="system-ui">CPL R$20-35 · Alta intenção</text><circle cx="97" cy="68" r="4" fill="rgba(8,145,178,0.9)"/></g>
+          <g class="fn" transform="translate(678,196)"><rect width="194" height="68" rx="10" fill="#111120" stroke="rgba(8,145,178,0.38)" stroke-width="1.5"/><rect width="194" height="3" rx="2" fill="rgba(8,145,178,0.85)"/><circle cx="97" cy="0" r="4" fill="rgba(8,145,178,0.9)"/><text x="13" y="28" fill="white" font-size="12.5" font-weight="700" font-family="system-ui">📄 Landing Page</text><text x="13" y="48" fill="rgba(255,255,255,0.45)" font-size="11" font-family="system-ui">Conversão: 25-35%</text><circle cx="97" cy="68" r="4" fill="rgba(8,145,178,0.9)"/></g>
+          <g class="fn" transform="translate(678,326)"><rect width="194" height="68" rx="10" fill="#111120" stroke="rgba(8,145,178,0.38)" stroke-width="1.5"/><rect width="194" height="3" rx="2" fill="rgba(8,145,178,0.85)"/><circle cx="97" cy="0" r="4" fill="rgba(8,145,178,0.9)"/><text x="13" y="28" fill="white" font-size="12.5" font-weight="700" font-family="system-ui">👤 Lead Capturado</text><text x="13" y="48" fill="rgba(255,255,255,0.45)" font-size="11" font-family="system-ui">~80 leads / mês</text><circle cx="97" cy="68" r="4" fill="rgba(8,145,178,0.9)"/></g>
+          <g class="fn" transform="translate(678,456)"><rect width="194" height="68" rx="10" fill="#111120" stroke="rgba(8,145,178,0.5)" stroke-width="1.5"/><rect width="194" height="3" rx="2" fill="rgba(8,145,178,0.85)"/><circle cx="97" cy="0" r="4" fill="rgba(8,145,178,0.9)"/><text x="13" y="28" fill="white" font-size="12.5" font-weight="700" font-family="system-ui">🎓 Workshop</text><text x="13" y="48" fill="rgba(255,255,255,0.45)" font-size="11" font-family="system-ui">R$297-497 · Conv. 12-20%</text><circle cx="97" cy="68" r="4" fill="rgba(8,145,178,0.6)"/></g>
+
+          <!-- MENTORIA -->
+          <g class="fn" transform="translate(305,635)">
+            <rect width="290" height="88" rx="14" fill="#140e24" stroke="rgba(124,58,237,0.65)" stroke-width="2"/>
+            <rect width="290" height="4" rx="2" fill="url(#mg)"/>
+            <circle cx="145" cy="0" r="5" fill="rgba(124,58,237,0.9)"/>
+            <text x="145" y="35" text-anchor="middle" fill="white" font-size="14.5" font-weight="800" font-family="system-ui">🏆 Mentoria Imob In Digital</text>
+            <text x="145" y="57" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-size="11.5" font-family="system-ui">R$5.000-15.000 por aluno · Turmas fechadas</text>
+            <text x="145" y="76" text-anchor="middle" fill="rgba(255,255,255,0.4)" font-size="11" font-family="system-ui">60 dias de acompanhamento com a equipe Arrive</text>
+            <circle cx="83" cy="88" r="5" fill="rgba(22,163,74,0.9)"/>
+            <circle cx="207" cy="88" r="5" fill="rgba(245,158,11,0.9)"/>
+          </g>
+
+          <!-- UPSELLS -->
+          <g class="fn" transform="translate(100,795)">
+            <rect width="204" height="74" rx="10" fill="#0c1a10" stroke="rgba(22,163,74,0.45)" stroke-width="1.5"/>
+            <rect width="204" height="3" rx="2" fill="rgba(22,163,74,0.8)"/>
+            <circle cx="102" cy="0" r="4" fill="rgba(22,163,74,0.9)"/>
+            <text x="102" y="30" text-anchor="middle" fill="white" font-size="13" font-weight="800" font-family="system-ui">🏠 Imob Funnel</text>
+            <text x="102" y="50" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="11" font-family="system-ui">R$2.650 + R$997+147/mês</text>
+            <text x="102" y="67" text-anchor="middle" fill="rgba(22,163,74,0.7)" font-size="10" font-weight="700" font-family="system-ui" letter-spacing="0.5">ASSESSORIA IMOBILIÁRIA</text>
+          </g>
+          <g class="fn" transform="translate(646,795)">
+            <rect width="210" height="74" rx="10" fill="#1a1208" stroke="rgba(245,158,11,0.45)" stroke-width="1.5"/>
+            <rect width="210" height="3" rx="2" fill="rgba(245,158,11,0.8)"/>
+            <circle cx="105" cy="0" r="4" fill="rgba(245,158,11,0.9)"/>
+            <text x="105" y="30" text-anchor="middle" fill="white" font-size="13" font-weight="800" font-family="system-ui">⚡ Imob Command</text>
+            <text x="105" y="50" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-size="11" font-family="system-ui">R$197-297 / mês (SaaS)</text>
+            <text x="105" y="67" text-anchor="middle" fill="rgba(245,158,11,0.7)" font-size="10" font-weight="700" font-family="system-ui" letter-spacing="0.5">SOFTWARE EXCLUSIVO</text>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- MODULES -->
+<section class="section">
+  <div class="container">
+    <span class="section-label">Conteúdo do programa</span>
+    <h2 class="section-title">8 Módulos. Do zero<br>à máquina funcionando.</h2>
+    <p class="section-sub">Metodologia sequencial — cada módulo constrói sobre o anterior. Nenhuma etapa é pulada.</p>
+    <div class="grid-2">
+      <div class="card"><div class="module-num">Módulo 01</div><div class="module-title">Fundamentos do Corretor Digital</div><ul class="module-topics"><li>Mentalidade de empresário vs corretor funcionário</li><li>Posicionamento de nicho e definição do ICP imobiliário</li><li>Declaração de marca e mensagem central</li><li>Auditoria digital: o que consertar antes de investir em ads</li></ul></div>
+      <div class="card"><div class="module-num">Módulo 02</div><div class="module-title">Posicionamento e Autoridade Digital</div><ul class="module-topics"><li>Como se tornar referência no seu nicho ou bairro</li><li>Identidade visual, tom de voz e consistência de marca</li><li>Estratégia de conteúdo que gera autoridade real</li><li>Instagram, LinkedIn e Google — onde aparecer e como</li></ul></div>
+      <div class="card"><div class="module-num">Módulo 03</div><div class="module-title">Landing Pages de Alta Conversão</div><ul class="module-topics"><li>Anatomia de uma LP que converte acima de 30%</li><li>Copy persuasivo para imóveis — sem fórmulas genéricas</li><li>Headline, prova social, CTA e formulário ideal</li><li>Testes A/B: como otimizar sem gastar mais em tráfego</li></ul></div>
+      <div class="card"><div class="module-num">Módulo 04</div><div class="module-title">Tráfego Pago no Meta Ads</div><ul class="module-topics"><li>Estrutura de campanha para imóveis: leads vs conversões</li><li>Segmentação por perfil de comprador, não por interesse genérico</li><li>Criativos que param o scroll e geram clique qualificado</li><li>Leitura de métricas e otimização semanal com a equipe</li></ul></div>
+      <div class="card"><div class="module-num">Módulo 05</div><div class="module-title">Qualificação Automática e CRM</div><ul class="module-topics"><li>Funil de qualificação via WhatsApp com automação real</li><li>Sequências de follow-up que não parecem spam</li><li>CRM básico: organização e acompanhamento de leads</li><li>Como separar lead frio de quente em 2 perguntas</li></ul></div>
+      <div class="card"><div class="module-num">Módulo 06</div><div class="module-title">Vendas Consultivas e Fechamento</div><ul class="module-topics"><li>Script de abordagem inicial — sem parecer vendedor</li><li>Diagnóstico de necessidades real do comprador</li><li>Objeções mais comuns do imobiliário e como dissolvê-las</li><li>Redução do ciclo de vendas com processo estruturado</li></ul></div>
+      <div class="card"><div class="module-num">Módulo 07</div><div class="module-title">Os 3 Funis de Aquisição</div><ul class="module-topics"><li>Funil Live Semanal: webinar recorrente como máquina de leads</li><li>Funil Low Ticket: produto de entrada que financia os próprios ads</li><li>Funil Workshop: evento de alta conversão para mentoria</li><li>Como integrar os 3 funis num ecossistema coeso e escalável</li></ul></div>
+      <div class="card"><div class="module-num">Módulo 08</div><div class="module-title">Escala, Delegação e Imob Command</div><ul class="module-topics"><li>O que terceirizar primeiro — e como monitorar à distância</li><li>Métricas de negócio que realmente importam para escalar</li><li>Imob Command: visão geral e integração na sua operação</li><li>Próximos passos: Imob Funnel e assessoria continuada</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- AVATARES -->
+<section class="section" style="background:linear-gradient(180deg,transparent 0%,rgba(124,58,237,0.04) 50%,transparent 100%)">
+  <div class="container">
+    <span class="section-label">Para quem é</span>
+    <h2 class="section-title">Qual é o seu perfil?</h2>
+    <p class="section-sub">A mentoria é desenhada para 4 perfis do mercado imobiliário. Cada um tem dores e metas diferentes.</p>
+    <div class="avatar-tabs">
+      <button class="avatar-tab active" onclick="showAvatar('autonomo',this)">Corretor Autônomo</button>
+      <button class="avatar-tab" onclick="showAvatar('imobiliaria',this)">Dono de Imobiliária</button>
+      <button class="avatar-tab" onclick="showAvatar('alto',this)">Alto Padrão</button>
+      <button class="avatar-tab" onclick="showAvatar('incorporador',this)">Incorporador</button>
+    </div>
+
+    <div class="avatar-content active" id="av-autonomo">
+      <div class="avatar-card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:8px">
+          <div><h3 style="font-size:26px;font-weight:900;margin-bottom:6px">👤 Corretor Autônomo</h3><p style="color:var(--muted);font-size:15px">Atua sozinho. Depende 100% de indicação. Quer previsibilidade de renda.</p></div>
+          <span class="tag tag-purple">Perfil mais comum</span>
+        </div>
+        <div class="avatar-two-col">
+          <div><p class="avatar-col-label" style="color:rgba(239,68,68,0.8)">⚠ Dores principais</p><div class="avatar-items"><div class="avatar-item avatar-item-pain">🎲 Faturamento imprevisível mês a mês — nenhum sistema de captação</div><div class="avatar-item avatar-item-pain">📞 Perde horas com leads frios que nunca compram nada</div><div class="avatar-item avatar-item-pain">😰 Medo de investir em ads sem saber se vai ter retorno</div><div class="avatar-item avatar-item-pain">🔄 Follow-up manual, sem processo, sem CRM</div></div></div>
+          <div><p class="avatar-col-label" style="color:rgba(124,58,237,0.9)">✓ O que a mentoria entrega</p><div class="avatar-items"><div class="avatar-item avatar-item-sol">Funil de captação de leads qualificados rodando em 30 dias</div><div class="avatar-item avatar-item-sol">Landing page + automação de qualificação configurados pela equipe</div><div class="avatar-item avatar-item-sol">Gestão de tráfego pago pela Arrive — sem você tocar no gerenciador</div><div class="avatar-item avatar-item-sol">Meta: 1º fechamento via funil digital nos 60 dias de mentoria</div></div></div>
         </div>
       </div>
     </div>
 
-    <div class="callout callout-p">
-      <div class="c-label">Lógica da 1ª Turma</div>
-      <div class="c-text">A 1ª turma não é sobre receita máxima — é sobre prova social. Gerar valor real, coletar depoimentos e cases para alimentar os funis com credibilidade. Dentro dela, os alunos com perfil já são ofertados para o <strong>Imob Funnel</strong> (assessoria) e o <strong>Imob Command</strong> (SaaS — ofertado na Aula 8).</div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ── FUNIS ── -->
-<div class="view" id="view-funis">
-  <div class="view-hero">
-    <div class="view-tag">🔀 Captação</div>
-    <div class="view-title">Funis & <span>Ecossistema</span></div>
-    <div class="view-sub">3 frentes de captação convergindo para a Mentoria, com ascensão interna para Imob Funnel e Imob Command.</div>
-  </div>
-  <div class="view-body">
-
-    <div class="funnel-wrap">
-
-      <!-- F1 -->
-      <div class="fn-col">
-        <div class="fn-col-title" style="color:var(--pl)">⚡ Funil 1 — Live Semanal</div>
-        <div class="fn-box hi-p"><div class="fn-name">Tráfego Pago</div><div class="fn-note">Meta Ads + orgânico</div></div>
-        <div class="fn-arrow">↓</div>
-        <div class="fn-box"><div class="fn-name">Page de Captura</div><div class="fn-note">inscrição na live</div></div>
-        <div class="fn-arrow">↓</div>
-        <div class="fn-box"><div class="fn-name">Live Semanal ao vivo</div><div class="fn-note">conteúdo estratégico</div></div>
-        <div class="fn-arrow">↓</div>
-        <div class="fn-box hi-g"><div class="fn-name">Pitch meio da live</div><div class="fn-note">call diagnóstico gratuito → Assessoria</div><div class="fn-price" style="color:var(--greenl)">R$ 2.650</div></div>
-        <div class="fn-arrow">↓</div>
-        <div class="fn-box hi-p"><div class="fn-name">Pitch final da live</div><div class="fn-note">oferta direta</div><div class="fn-price" style="color:var(--pl)">Mentoria → R$ 1.497</div></div>
-      </div>
-
-      <!-- F2 -->
-      <div class="fn-col">
-        <div class="fn-col-title" style="color:var(--greenl)">💰 Funil 2 — Low Ticket</div>
-        <div class="fn-box hi-g"><div class="fn-name">Tráfego Direto</div><div class="fn-note">Meta Ads</div></div>
-        <div class="fn-arrow">↓</div>
-        <div class="fn-box"><div class="fn-name">Swipe File de Conteúdo</div><div class="fn-note">50+ formatos para corretores</div><div class="fn-price" style="color:var(--greenl)">R$ 27–47</div></div>
-        <div class="fn-arrow">↓</div>
-        <div class="fn-box"><div class="fn-name">Upsell imediato</div><div class="fn-name" style="color:var(--yellow)">"Conteúdo que Vende"</div><div class="fn-note">mini-curso de produção</div><div class="fn-price" style="color:var(--yellow)">R$ 97–197</div></div>
-        <div class="fn-arrow">↓</div>
-        <div class="fn-box hi-g"><div class="fn-name">Call gratuita de análise</div><div class="fn-note">dentro do upsell / pós-compra</div></div>
-        <div class="fn-arrow">↓</div>
-        <div class="fn-box hi-p"><div class="fn-name">Pitch Mentoria na call</div><div class="fn-price" style="color:var(--pl)">R$ 1.497</div></div>
-      </div>
-
-      <!-- F3 -->
-      <div class="fn-col">
-        <div class="fn-col-title" style="color:var(--yellow)">🎯 Funil 3 — Workshop (futuro)</div>
-        <div class="fn-box"><div class="fn-name">Tráfego Pago</div><div class="fn-note">Meta Ads</div></div>
-        <div class="fn-arrow">↓</div>
-        <div class="fn-box"><div class="fn-name">Venda de Ingressos</div><div class="fn-note">4 lotes progressivos</div><div class="fn-price" style="color:var(--yellow)">R$ 19–47</div></div>
-        <div class="fn-arrow">↓</div>
-        <div class="fn-box"><div class="fn-name">OB: Gravação</div><div class="fn-price" style="color:var(--yellow)">R$ 97 → cashback R$ 194</div></div>
-        <div class="fn-arrow">↓</div>
-        <div class="fn-box"><div class="fn-name">Workshop 2 dias ao vivo</div><div class="fn-note">imersão — executa durante</div></div>
-        <div class="fn-arrow">↓</div>
-        <div class="fn-box hi-p"><div class="fn-name">Pitch Mentoria — Dia 2</div><div class="fn-price" style="color:var(--pl)">R$ 1.497</div></div>
-      </div>
-
-      <!-- Merge -->
-      <div class="fn-merge">↓ &nbsp; todas as frentes convergem &nbsp; ↓</div>
-      <div class="fn-main-box">
-        <div style="font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--pl);margin-bottom:8px">Produto Principal</div>
-        <div class="fn-main-title">Mentoria Imob In Digital</div>
-        <div class="fn-main-price">R$ 1.497 / ano</div>
-        <div class="fn-main-sub">Hotmart · Grupo online · 2 lives/semana</div>
-      </div>
-
-      <!-- Ascensão -->
-      <div class="fn-merge" style="padding:4px 0">↓ &nbsp; ascensão interna &nbsp; ↓</div>
-      <div class="fn-ups">
-        <div class="fn-up">
-          <div class="fn-name">Imob Funnel</div>
-          <div class="fn-note">Assessoria completa — para alunos com perfil e verba</div>
-          <div class="fn-price">R$ 2.650</div>
+    <div class="avatar-content" id="av-imobiliaria">
+      <div class="avatar-card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:8px">
+          <div><h3 style="font-size:26px;font-weight:900;margin-bottom:6px">🏢 Dono de Imobiliária</h3><p style="color:var(--muted);font-size:15px">Tem equipe e carteira. O digital não funciona de verdade — e a equipe ainda vive de walk-in.</p></div>
+          <span class="tag tag-purple">Alto potencial</span>
         </div>
-        <div class="fn-up">
-          <div class="fn-name">Imob Command</div>
-          <div class="fn-note">SaaS: site + LP + CRM — ofertado na Aula 8</div>
-          <div class="fn-price" style="color:var(--greenl)">R$ 197–297/mês</div>
+        <div class="avatar-two-col">
+          <div><p class="avatar-col-label" style="color:rgba(239,68,68,0.8)">⚠ Dores principais</p><div class="avatar-items"><div class="avatar-item avatar-item-pain">💸 Gasta com marketing mas não sabe o CAC real por corretor</div><div class="avatar-item avatar-item-pain">👥 Equipe depende de walk-in e indicação — sem funil próprio</div><div class="avatar-item avatar-item-pain">📊 Sem dashboard de métricas de captação por produto ou bairro</div><div class="avatar-item avatar-item-pain">🔀 Processos inconsistentes — cada corretor faz do seu jeito</div></div></div>
+          <div><p class="avatar-col-label" style="color:rgba(124,58,237,0.9)">✓ O que a mentoria entrega</p><div class="avatar-items"><div class="avatar-item avatar-item-sol">Ecossistema digital centralizado para toda a equipe comercial</div><div class="avatar-item avatar-item-sol">Funis segmentados por tipo de imóvel, bairro ou perfil de buyer</div><div class="avatar-item avatar-item-sol">Treinamento de time em qualificação e follow-up estruturado</div><div class="avatar-item avatar-item-sol">Imob Command para gestão unificada de leads da imobiliária</div></div></div>
         </div>
       </div>
     </div>
 
-    <div class="callout callout-g" style="margin-top:8px">
-      <div class="c-label">Low Ticket — Sugestão do stack</div>
-      <div class="c-text"><strong>Swipe File:</strong> 50+ formatos de posts prontos, templates de legenda, calendário editorial de 30 dias. <strong>Upsell "Conteúdo que Vende":</strong> como gravar Reels que geram lead, CapCut básico para corretores, os 3 Conteúdos de Posicionamento na prática, Matriz 4x4 aplicada — 8 posts prontos + call gratuita de análise → pitch da Mentoria.</div>
-    </div>
-  </div>
-</div>
-
-<!-- ── FORMATO ── -->
-<div class="view" id="view-formato">
-  <div class="view-hero">
-    <div class="view-tag">📅 Operação</div>
-    <div class="view-title">Formato & <span>Ritmo Semanal</span></div>
-    <div class="view-sub">Como funciona a semana dentro da Mentoria — lives, grupos e entregáveis.</div>
-  </div>
-  <div class="view-body">
-    <div class="g2" style="margin-bottom:24px">
-      <div class="card">
-        <div class="card-label">Live 1 — Plantão de Dúvidas</div>
-        <div style="font-size:14px;font-weight:700;margin-bottom:14px;color:var(--tx2)">Terças-feiras</div>
-        <div style="display:flex;flex-direction:column;gap:10px">
-          <div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--greenl);margin-bottom:3px">Abertura</div><div style="font-size:13px;color:var(--tx2)">Insight de alto valor sobre tráfego, mercado ou ferramenta</div></div>
-          <div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--greenl);margin-bottom:3px">Plantão aberto</div><div style="font-size:13px;color:var(--tx2)">Resolução de dúvidas técnicas e operacionais dos alunos</div></div>
-          <div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--greenl);margin-bottom:3px">Hot Seat</div><div style="font-size:13px;color:var(--tx2)">Um participante apresenta sua situação — análise ao vivo</div></div>
+    <div class="avatar-content" id="av-alto">
+      <div class="avatar-card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:8px">
+          <div><h3 style="font-size:26px;font-weight:900;margin-bottom:6px">💎 Especialista Alto Padrão</h3><p style="color:var(--muted);font-size:15px">Imóveis R$1M+. Público exige autoridade e discrição — ads genéricos destroem o posicionamento.</p></div>
+          <span class="tag tag-purple">Ticket elevado</span>
         </div>
-      </div>
-      <div class="card">
-        <div class="card-label">Live 2 — Encontro Semanal</div>
-        <div style="font-size:14px;font-weight:700;margin-bottom:14px;color:var(--tx2)">Quintas-feiras · 14h–18h</div>
-        <div style="display:flex;flex-direction:column;gap:10px">
-          <div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--pl);margin-bottom:3px">Debrief</div><div style="font-size:13px;color:var(--tx2)">Revisão do que foi feito — accountability</div></div>
-          <div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--pl);margin-bottom:3px">Tema da semana</div><div style="font-size:13px;color:var(--tx2)">Apresentação estruturada sobre a metodologia</div></div>
-          <div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--pl);margin-bottom:3px">Prática + Hot Seat</div><div style="font-size:13px;color:var(--tx2)">Exercício ao vivo + análise de resultado de um participante</div></div>
-          <div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--pl);margin-bottom:3px">Fechamento</div><div style="font-size:13px;color:var(--tx2)">Próximos passos da semana para cada aluno</div></div>
-        </div>
-      </div>
-    </div>
-    <div class="g3">
-      <div class="card"><div class="card-label">Grupo Principal</div><div style="font-weight:700;margin-bottom:4px">WhatsApp</div><div style="font-size:12px;color:var(--tx2)">Comunidade — dúvidas, resultados, motivação</div></div>
-      <div class="card"><div class="card-label">Grupo Técnico</div><div style="font-weight:700;margin-bottom:4px">WhatsApp</div><div style="font-size:12px;color:var(--tx2)">Problemas operacionais — ferramentas e bugs</div></div>
-      <div class="card"><div class="card-label">Área de Membros</div><div style="font-weight:700;margin-bottom:4px">Hotmart</div><div style="font-size:12px;color:var(--tx2)">Módulos gravados, materiais e gravações das lives</div></div>
-    </div>
-  </div>
-</div>
-
-<!-- ── PÚBLICO ── -->
-<div class="view" id="view-publico">
-  <div class="view-hero">
-    <div class="view-tag">🎯 Inteligência</div>
-    <div class="view-title">Público & <span>Avatares</span></div>
-    <div class="view-sub">4 perfis de compradores — dores, desejos e objeções de cada um.</div>
-  </div>
-  <div class="view-body">
-    <div class="av-tabs">
-      <div class="av-tab active" onclick="setAvatar('autonomo',this)">Corretor Autônomo</div>
-      <div class="av-tab" onclick="setAvatar('imob',this)">Dono de Imobiliária</div>
-      <div class="av-tab" onclick="setAvatar('alto',this)">Corretor Alto Padrão</div>
-      <div class="av-tab" onclick="setAvatar('incorp',this)">Incorporador / Construtor</div>
-    </div>
-
-    <!-- Corretor autônomo -->
-    <div class="av-panel active" id="av-autonomo">
-      <div class="callout callout-p" style="margin-bottom:20px">
-        <div class="c-label">Avatar central da Mentoria</div>
-        <div class="c-text">Tem experiência no mercado, já tentou alguma coisa no digital mas não construiu estrutura própria. Consome conteúdo, não executa. <strong>Nível: Problem Aware.</strong></div>
-      </div>
-      <div class="g2">
-        <div>
-          <div class="sec-label">5 Dores Verbalizadas</div>
-          <div class="dore"><div class="dore-title">D1 — "Mês irregular, não sei de onde vem a próxima venda"</div><div class="dore-desc">Ansiedade crônica. Começa no dia 15, vira desespero silencioso no dia 28. Imprevisibilidade é a dor central.</div><div class="dore-hook">→ Hook: cena de fim de mês</div></div>
-          <div class="dore"><div class="dore-title">D2 — "Já tentei anúncio e não funcionou"</div><div class="dore-desc">Gastou R$200–500 no Meta e não teve retorno. Desconfiança armada contra tráfego.</div><div class="dore-hook">→ Validar a experiência ruim antes de propor qualquer coisa</div></div>
-          <div class="dore"><div class="dore-title">D3 — "Portal me cobra caro e entrega lead frio"</div><div class="dore-desc">Continua pagando enquanto reclama. Disputa o mesmo lead com outros 4 corretores.</div><div class="dore-hook">→ Ele está financiando a própria concorrência</div></div>
-          <div class="dore"><div class="dore-title">D4 — "Meu concorrente aparece mais que eu"</div><div class="dore-desc">Vê o concorrente mais novo ganhando visibilidade. Mistura de inveja e insegurança — nunca admite.</div></div>
-          <div class="dore"><div class="dore-title">D5 — "Não sei fazer digital / não tenho tempo"</div><div class="dore-desc">Paralisia disfarçada de falta de tempo. Medo real de aparecer online e parecer amador.</div></div>
-        </div>
-        <div>
-          <div class="sec-label">5 Dores Silenciosas</div>
-          <div class="dore" style="border-color:rgba(239,68,68,.2)"><div class="dore-title" style="color:#f87171">D6 — "Estou pedindo favor para sobreviver"</div><div class="dore-desc">Depende de indicação de família e amigos. Sabe que é constrangedor — nunca verbaliza.</div></div>
-          <div class="dore" style="border-color:rgba(239,68,68,.2)"><div class="dore-title" style="color:#f87171">D7 — "Não controlo nada do meu negócio"</div><div class="dore-desc">Acorda sem saber de onde vem o lead da semana. Sem sistema, sem previsibilidade.</div></div>
-          <div class="dore" style="border-color:rgba(239,68,68,.2)"><div class="dore-title" style="color:#f87171">D8 — "A janela está fechando e eu ainda não agi"</div><div class="dore-desc">650 mil corretores crescendo, digital dominando. Sente que quem não agir vai ser engolido.</div></div>
-          <div class="dore" style="border-color:rgba(239,68,68,.2)"><div class="dore-title" style="color:#f87171">D9 — "Me sinto invisível no mercado"</div><div class="dore-desc">Tem 10–15 anos de experiência, sabe vender — mas o comprador novo não sabe que ele existe.</div></div>
-          <div class="dore" style="border-color:rgba(239,68,68,.2)"><div class="dore-title" style="color:#f87171">D10 — "Trabalho muito e ganho de forma imprevisível"</div><div class="dore-desc">Plantão no domingo, lead que sumiu, proposta que caiu. Desproporção entre esforço e retorno.</div></div>
-          <div class="callout callout-p" style="margin-top:10px">
-            <div class="c-label">O sonho não dito</div>
-            <div class="c-text" style="font-style:italic">"Quero acordar e ter leads esperando por mim. Quero que as pessoas me procurem, não o contrário."</div>
-          </div>
-        </div>
-      </div>
-      <div class="div"></div>
-      <div class="sec-label">Objeções + Como Quebrar</div>
-      <div style="overflow-x:auto"><table class="tbl">
-        <thead><tr><th>Objeção</th><th>O que está por trás</th><th>Como responder</th></tr></thead>
-        <tbody>
-          <tr><td><strong>"Está caro"</strong></td><td style="color:var(--tx2)">Não entendeu o valor. Medo de gastar e não ter retorno.</td><td>3 leads perdidos/mês × R$3.000 comissão = R$9.000 na mesa. Todo mês.</td></tr>
-          <tr><td><strong>"Vou pensar"</strong></td><td style="color:var(--tx2)">Convive com instabilidade há tanto tempo que virou vida normal.</td><td>Desnormalizar. Cada dia sem estrutura = leads indo pro concorrente.</td></tr>
-          <tr><td><strong>"Já tentei tráfego"</strong></td><td style="color:var(--tx2)">Fez sozinho ou com agência genérica. Sem estrutura para receber o lead.</td><td>"O problema não foi o tráfego — foi não ter estrutura para receber o que trouxe."</td></tr>
-          <tr><td><strong>"No meu mercado é diferente"</strong></td><td style="color:var(--tx2)">Zona de conforto. Medo de ser o primeiro a tentar.</td><td>Dados de busca da região. O comprador pesquisa online — a questão é se ele aparece ou não.</td></tr>
-        </tbody>
-      </table></div>
-    </div>
-
-    <!-- Dono de Imobiliária -->
-    <div class="av-panel" id="av-imob">
-      <div class="callout callout-p" style="margin-bottom:20px">
-        <div class="c-label">Dono de Imobiliária</div>
-        <div class="c-text">Tem equipe de 3 a 20 corretores. Quer escala sem depender de cada corretor fazendo algo diferente no digital. O problema não é captar 1 lead — é criar uma máquina previsível para toda a equipe. <strong>Nível: Solution Aware.</strong></div>
-      </div>
-      <div class="g2">
-        <div>
-          <div class="sec-label">Dores Principais</div>
-          <div class="dore"><div class="dore-title">Cada corretor faz uma coisa diferente no digital</div><div class="dore-desc">Sem padrão, sem estratégia. A marca da imobiliária é inconsistente e fraca.</div></div>
-          <div class="dore"><div class="dore-title">Paga portal para toda a equipe sem retorno que justifique</div><div class="dore-desc">Custo fixo alto, lead frio dividido entre todos, margem espremida.</div></div>
-          <div class="dore"><div class="dore-title">Não sabe estruturar captação própria sem depender de agência</div><div class="dore-desc">Agências genéricas não entendem o ciclo imobiliário.</div></div>
-          <div class="dore"><div class="dore-title">Quer crescer mas não sabe qual canal priorizar</div><div class="dore-desc">Tenta tudo ao mesmo tempo e não vai fundo em nada.</div></div>
-        </div>
-        <div>
-          <div class="sec-label">O Que Ele Quer</div>
-          <div class="card" style="margin-bottom:10px">
-            <div class="lv"><span class="lv-k">Máquina de leads</span><span class="lv-v">Canal próprio, previsível, sem portal</span></div>
-            <div class="lv"><span class="lv-k">Equipe produtiva</span><span class="lv-v">Corretores com direção clara no digital</span></div>
-            <div class="lv"><span class="lv-k">Marca forte</span><span class="lv-v">Imobiliária referência na cidade</span></div>
-          </div>
-          <div class="sec-label">Objeções Específicas</div>
-          <div class="dore"><div class="dore-title">"Meus corretores não vão usar"</div><div class="dore-desc">A metodologia é para o dono — ele aprende e implementa centralmente.</div></div>
-          <div class="dore"><div class="dore-title">"Já tenho uma agência"</div><div class="dore-desc">Agência genérica não entende o ciclo de venda imobiliário. E ele depende de terceiro para o que deveria ser estratégia própria.</div></div>
+        <div class="avatar-two-col">
+          <div><p class="avatar-col-label" style="color:rgba(239,68,68,0.8)">⚠ Dores principais</p><div class="avatar-items"><div class="avatar-item avatar-item-pain">🎭 Ads genéricos que desvalorizam o posicionamento premium</div><div class="avatar-item avatar-item-pain">⏳ Ciclo de vendas longo (6-18 meses) sem sistema de nurturing</div><div class="avatar-item avatar-item-pain">📱 Conteúdo no estilo errado para o público de alto padrão</div><div class="avatar-item avatar-item-pain">🤝 Confia só em network — zero captação ativa e escalável</div></div></div>
+          <div><p class="avatar-col-label" style="color:rgba(124,58,237,0.9)">✓ O que a mentoria entrega</p><div class="avatar-items"><div class="avatar-item avatar-item-sol">Posicionamento de autoridade premium — não de volume</div><div class="avatar-item avatar-item-sol">Estratégia de conteúdo calibrada para público R$1M+</div><div class="avatar-item avatar-item-sol">Funil de qualificação que filtra antes de qualquer contato</div><div class="avatar-item avatar-item-sol">Tráfego com segmentação por comportamento e perfil de renda</div></div></div>
         </div>
       </div>
     </div>
 
-    <!-- Alto padrão -->
-    <div class="av-panel" id="av-alto">
-      <div class="callout callout-p" style="margin-bottom:20px">
-        <div class="c-label">Corretor de Alto Padrão · R$800K+</div>
-        <div class="c-text">O problema não é gerar qualquer lead — é atrair o perfil certo sem perder posicionamento. Muito sensível à imagem: não quer parecer "guru de marketing". <strong>Nível: Problem Aware + preconceito com digital.</strong></div>
-      </div>
-      <div class="g2">
-        <div>
-          <div class="sec-label">Dores Principais</div>
-          <div class="dore"><div class="dore-title">Lead de portal não tem perfil</div><div class="dore-desc">Paga caro por leads que querem imóvel de R$200K. Perde tempo qualificando.</div></div>
-          <div class="dore"><div class="dore-title">Não sabe como atrair comprador de R$1M+ no digital</div><div class="dore-desc">Associa digital com volume e massificação.</div></div>
-          <div class="dore"><div class="dore-title">"Não quero parecer um influencer"</div><div class="dore-desc">Medo de aparecer de forma que prejudique o posicionamento premium.</div></div>
-          <div class="dore"><div class="dore-title">Depende de network e indicações de luxo</div><div class="dore-desc">Rede forte mas finita. Quer expandir sem perder qualidade dos contatos.</div></div>
+    <div class="avatar-content" id="av-incorporador">
+      <div class="avatar-card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;margin-bottom:8px">
+          <div><h3 style="font-size:26px;font-weight:900;margin-bottom:6px">🏗️ Incorporador / Lançamento</h3><p style="color:var(--muted);font-size:15px">Tem produto pronto ou em lançamento. Precisa de campanha e funil de pré-venda estruturado.</p></div>
+          <span class="tag tag-purple">Urgência de resultado</span>
         </div>
-        <div>
-          <div class="sec-label">O Que Ele Quer</div>
-          <div class="card" style="margin-bottom:10px">
-            <div class="lv"><span class="lv-k">Autoridade</span><span class="lv-v">Especialista reconhecido no segmento premium</span></div>
-            <div class="lv"><span class="lv-k">Lead qualificado</span><span class="lv-v">Quem fala com ele já sabe quem ele é</span></div>
-            <div class="lv"><span class="lv-k">Sofisticação</span><span class="lv-v">Presença digital que reforça o posicionamento</span></div>
-          </div>
-          <div class="callout callout-y">
-            <div class="c-label">Atenção na copy</div>
-            <div class="c-text">Nunca usar quebra financeira, recomeço, superação pessoal ou linguagem de volume. O ICP de R$1M+ não valoriza e pode gerar desconfiança.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Incorporador -->
-    <div class="av-panel" id="av-incorp">
-      <div class="callout callout-p" style="margin-bottom:20px">
-        <div class="c-label">Incorporador / Construtor Regional</div>
-        <div class="c-text">Tem empreendimentos para lançar. Quer canal de captação próprio para reduzir dependência de imobiliárias e comissões. Ciclo de venda muito mais longo. <strong>Maior potencial de ascensão para o Imob Funnel.</strong></div>
-      </div>
-      <div class="g2">
-        <div>
-          <div class="sec-label">Dores Principais</div>
-          <div class="dore"><div class="dore-title">Paga comissão alta e não tem base de leads própria</div><div class="dore-desc">Cada lançamento começa do zero dependendo de imobiliárias parceiras.</div></div>
-          <div class="dore"><div class="dore-title">Não sabe estruturar lista de interesse antes do lançamento</div><div class="dore-desc">Quer gerar expectativa e listas VIP mas não tem estrutura digital.</div></div>
-          <div class="dore"><div class="dore-title">Investe em stand mas não tem presença digital</div><div class="dore-desc">O comprador pesquisou tudo online antes de ir ao stand.</div></div>
-        </div>
-        <div>
-          <div class="sec-label">O Que Ele Quer</div>
-          <div class="card" style="margin-bottom:10px">
-            <div class="lv"><span class="lv-k">Base de leads própria</span><span class="lv-v">Canal que ele controla entre lançamentos</span></div>
-            <div class="lv"><span class="lv-k">Lançamentos com lista VIP</span><span class="lv-v">Fila antes de abrir vendas</span></div>
-            <div class="lv"><span class="lv-k">Menos dependência</span><span class="lv-v">Reduzir comissão paga a imobiliárias</span></div>
-          </div>
-          <div class="card">
-            <div class="card-label">Dados do mercado</div>
-            <div class="lv"><span class="lv-k">96% dos compradores</span><span class="lv-v" style="color:var(--greenl)">iniciaram busca online (NAR 2023)</span></div>
-            <div class="lv"><span class="lv-k">Vendas do setor</span><span class="lv-v">+27,4% em 2024</span></div>
-            <div class="lv"><span class="lv-k">650 mil corretores</span><span class="lv-v">cresceu 195% em 15 anos</span></div>
-          </div>
+        <div class="avatar-two-col">
+          <div><p class="avatar-col-label" style="color:rgba(239,68,68,0.8)">⚠ Dores principais</p><div class="avatar-items"><div class="avatar-item avatar-item-pain">🚀 Lançamento sem lista aquecida — zero pré-cadastros</div><div class="avatar-item avatar-item-pain">💰 Alto gasto em ads sem estratégia de funil de pré-venda</div><div class="avatar-item avatar-item-pain">📋 Sem processo de VIP list e qualificação automatizada</div><div class="avatar-item avatar-item-pain">🎯 Ads que geram cliques mas não leads com intenção real</div></div></div>
+          <div><p class="avatar-col-label" style="color:rgba(124,58,237,0.9)">✓ O que a mentoria entrega</p><div class="avatar-items"><div class="avatar-item avatar-item-sol">Estratégia de pré-lançamento e aquecimento de lista VIP</div><div class="avatar-item avatar-item-sol">Funil de pré-cadastro com qualificação e scoring automáticos</div><div class="avatar-item avatar-item-sol">Campanhas por fase: awareness → interesse → conversão</div><div class="avatar-item avatar-item-sol">Dashboard de leads por empreendimento no Imob Command</div></div></div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- ── NARRATIVA ── -->
-<div class="view" id="view-narrativa">
-  <div class="view-hero">
-    <div class="view-tag">💬 Posicionamento</div>
-    <div class="view-title">Narrativa & <span>Mecanismo</span></div>
-    <div class="view-sub">Big idea, mecanismo único e diferencial de mercado.</div>
-  </div>
-  <div class="view-body">
-    <div class="callout callout-p" style="margin-bottom:14px">
-      <div class="c-label">Big Idea</div>
-      <div class="c-text" style="font-size:16px">O corretor não tem problema de venda. Tem problema de invisibilidade. Ele sabe vender. O que não tem é estrutura para aparecer antes do concorrente — um sistema que gera leads todo dia sem depender de indicação, portal ou sorte.</div>
-    </div>
-    <div class="callout" style="background:rgba(80,130,220,.07);border-color:rgba(80,130,220,.3);margin-bottom:14px">
-      <div class="c-label" style="color:#7db4f7">Mecanismo Único</div>
-      <div class="c-text">O problema do corretor que tentou tráfego e não teve resultado não foi o tráfego — foi a ausência de estrutura para receber o lead. A campanha rodou, o lead chegou, não havia onde converter.<br><br><strong>A metodologia resolve o problema real: constrói a estrutura antes de qualquer tráfego. Estrutura → Posicionamento → Tráfego. A sequência importa. Inverter mata o resultado. É exatamente o que todos os outros fazem.</strong></div>
-    </div>
-    <div class="callout callout-g" style="margin-bottom:24px">
-      <div class="c-label">Promessa Central</div>
-      <div class="c-text" style="font-size:15px">Construa sua estrutura digital de vendas imobiliárias — do posicionamento ao tráfego pago — com acompanhamento semanal para não ficar sozinho na execução.</div>
-    </div>
-
-    <div class="div" style="margin-bottom:24px"></div>
-
-    <div class="g2" style="margin-bottom:24px">
-      <div>
-        <div class="sec-label">Diferencial vs mercado</div>
-        <div style="overflow-x:auto"><table class="tbl">
-          <thead><tr><th>Mercado</th><th>Arrive</th></tr></thead>
-          <tbody>
-            <tr><td style="color:var(--tx2)">Ensina conteúdo</td><td style="color:var(--greenl)">Constrói o sistema</td></tr>
-            <tr><td style="color:var(--tx2)">Marca pessoal — ele é o produto</td><td style="color:var(--greenl)">Empresa com metodologia proprietária</td></tr>
-            <tr><td style="color:var(--tx2)">O participante assiste</td><td style="color:var(--greenl)">O participante executa durante</td></tr>
-            <tr><td style="color:var(--tx2)">Sai com aprendizado</td><td style="color:var(--greenl)">Sai com entregável concreto por módulo</td></tr>
-            <tr><td style="color:var(--tx2)">Tática isolada</td><td style="color:var(--greenl)">Sistema completo integrado — 5 passos em ordem</td></tr>
-            <tr><td style="color:var(--tx2)">Teoria de quem ensinou</td><td style="color:var(--greenl)">Prática de quem operou +200 estruturas desde 2012</td></tr>
-          </tbody>
-        </table></div>
-      </div>
-      <div>
-        <div class="sec-label">Arco de Transformação</div>
-        <div class="card" style="margin-bottom:10px">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#f87171;margin-bottom:8px">Como ele chega</div>
-          <div style="font-size:13px;color:var(--tx2);line-height:1.8">Mês irregular · depende de indicação<br>Paga portal · lead frio e disputado<br>Tentou tráfego · perdeu dinheiro<br>Vê o concorrente aparecer mais<br>Sabe que precisa agir — não sabe como</div>
-        </div>
-        <div class="card card-g">
-          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--greenl);margin-bottom:8px">Como sai</div>
-          <div style="font-size:13px;color:var(--tx2);line-height:1.8">Sistema digital funcionando<br>Lead chegando de forma previsível<br>Não depende de portal ou indicação<br>Posicionado como referência na região<br>Com acompanhamento semanal</div>
-        </div>
+<!-- REVENUE -->
+<section class="section" style="background:linear-gradient(180deg,transparent 0%,rgba(124,58,237,0.04) 50%,transparent 100%)">
+  <div class="container">
+    <span class="section-label" style="display:block;text-align:center">Stack de receita</span>
+    <h2 class="section-title" style="text-align:center">A composição do<br><span class="gradient-text">faturamento recorrente</span></h2>
+    <p class="section-sub" style="text-align:center;margin:20px auto 56px">3 produtos. 1 ecossistema. Receita que cresce com cada aluno que escala.</p>
+    <div class="revenue-stack">
+      <div class="revenue-row"><div class="revenue-icon" style="background:rgba(124,58,237,0.14)">🏆</div><div class="revenue-info"><div class="revenue-name">Mentoria Imob In Digital</div><div class="revenue-desc">Turmas fechadas · 60 dias de acompanhamento · Vagas limitadas por cohort</div></div><div class="revenue-value"><div class="revenue-amount">R$5k–15k</div><div class="revenue-type">por aluno</div></div></div>
+      <div class="revenue-row"><div class="revenue-icon" style="background:rgba(22,163,74,0.14)">🏠</div><div class="revenue-info"><div class="revenue-name">Imob Funnel</div><div class="revenue-desc">Assessoria completa: posicionamento + landing page + campanhas + acompanhamento</div></div><div class="revenue-value"><div class="revenue-amount">R$2.650</div><div class="revenue-type">+ R$997+147/mês recorrência</div></div></div>
+      <div class="revenue-row"><div class="revenue-icon" style="background:rgba(245,158,11,0.14)">⚡</div><div class="revenue-info"><div class="revenue-name">Imob Command (SaaS)</div><div class="revenue-desc">Software exclusivo para gestão de leads e operação imobiliária digital</div></div><div class="revenue-value"><div class="revenue-amount">R$197–297</div><div class="revenue-type">por mês / por licença</div></div></div>
+      <div class="revenue-total">
+        <div><div class="revenue-total-label">Potencial MRR com 10 alunos escalados</div><div style="font-size:13px;color:rgba(255,255,255,0.65);margin-top:4px">Mentoria + Funnel recorrente + Command por cliente</div></div>
+        <div class="revenue-total-value">R$30k+/mês</div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- ── METODOLOGIA ── -->
-<div class="view" id="view-metodologia">
-  <div class="view-hero">
-    <div class="view-tag">⚙️ Método</div>
-    <div class="view-title">Os <span>5 Passos</span></div>
-    <div class="view-sub">A sequência que não pode ser invertida. Cada passo depende do anterior — pular qualquer um é o que faz o resultado não acontecer.</div>
+<!-- DELIVERABLES -->
+<section class="section">
+  <div class="container">
+    <span class="section-label">O que você recebe</span>
+    <h2 class="section-title">Tudo o que está incluído</h2>
+    <p class="section-sub">Nada de conteúdo gravado e abandonado. Acompanhamento real, entregáveis concretos.</p>
+    <div class="deliverable-grid">
+      <div class="deliverable-item"><div class="check-icon">✓</div><div class="deliverable-text"><strong>8 módulos gravados</strong> com metodologia completa do zero à escala</div></div>
+      <div class="deliverable-item"><div class="check-icon">✓</div><div class="deliverable-text"><strong>60 dias de acompanhamento</strong> direto com a equipe Arrive</div></div>
+      <div class="deliverable-item"><div class="check-icon">✓</div><div class="deliverable-text"><strong>Landing page profissional</strong> criada e configurada pela equipe</div></div>
+      <div class="deliverable-item"><div class="check-icon">✓</div><div class="deliverable-text"><strong>Gestão de tráfego pago</strong> no Meta Ads por 60 dias (incluído)</div></div>
+      <div class="deliverable-item"><div class="check-icon">✓</div><div class="deliverable-text"><strong>Funil de qualificação automático</strong> configurado no WhatsApp</div></div>
+      <div class="deliverable-item"><div class="check-icon">✓</div><div class="deliverable-text"><strong>Calendário de conteúdo</strong> por 60 dias para redes sociais</div></div>
+      <div class="deliverable-item"><div class="check-icon">✓</div><div class="deliverable-text"><strong>Acesso ao Imob Command</strong> durante todo o período da mentoria</div></div>
+      <div class="deliverable-item"><div class="check-icon">✓</div><div class="deliverable-text"><strong>Comunidade exclusiva</strong> de alunos para networking e suporte</div></div>
+      <div class="deliverable-item"><div class="check-icon">✓</div><div class="deliverable-text"><strong>+200 estruturas testadas</strong> de criativos, copies e funis imobiliários</div></div>
+      <div class="deliverable-item"><div class="check-icon">✓</div><div class="deliverable-text"><strong>Relatórios mensais</strong> de performance com recomendações da equipe</div></div>
+    </div>
   </div>
-  <div class="view-body">
+</section>
 
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-body">
-        <div class="step-title">Planejamento</div>
-        <div class="step-sub">Antes de qualquer ação — entender para quem vende, o que vende e onde está hoje</div>
-        <ul class="step-items">
-          <li>Definição do público comprador: perfil, tipo de imóvel, faixa de valor, momento de compra</li>
-          <li>Construção da oferta: o que você vende e por que alguém deveria te escolher</li>
-          <li>Pesquisa de mercado e benchmarking de concorrentes</li>
-          <li>Diagnóstico do cenário atual: o que está funcionando, onde estão os gargalos</li>
-        </ul>
-        <div class="step-out">Entregável: <span>Perfil de cliente ideal definido + oferta posicionada</span></div>
-      </div>
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="cta-glow"></div>
+  <div class="container" style="position:relative;z-index:1">
+    <h2 class="cta-title">Pronto para construir<br><span class="gradient-text">sua máquina digital?</span></h2>
+    <p class="cta-sub">Vagas limitadas por turma. Cada aluno recebe atenção individual da equipe Arrive durante os 60 dias.</p>
+    <div class="cta-actions">
+      <a href="https://wa.me/5516993939823?text=Quero%20saber%20mais%20sobre%20a%20Mentoria%20Imob%20In%20Digital" class="btn btn-primary btn-lg" target="_blank">Quero participar da mentoria →</a>
     </div>
-
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-body">
-        <div class="step-title">Posicionamento</div>
-        <div class="step-sub">Como aparecer de forma profissional e consistente — sem reinventar todo dia</div>
-        <ul class="step-items">
-          <li>Definição da comunicação central: o que falar, como falar, qual linha seguir</li>
-          <li>Ajuste de bio, destaques e perfil digital</li>
-          <li>Como ser percebido como referência na região</li>
-          <li>Os 3 Conteúdos de Posicionamento: Apresentação, Prova Social, Oportunidade</li>
-        </ul>
-        <div class="step-out">Entregável: <span>Perfil digital revisado + 3 posts âncora planejados</span></div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-body">
-        <div class="step-title">Estrutura</div>
-        <div class="step-sub">O ponto de conversão — onde o lead chega e não escapa</div>
-        <ul class="step-items">
-          <li>Ponto de conversão: formulário ou landing page configurada e no ar</li>
-          <li>Fluxo básico de lead: o que acontece desde o momento em que o contato chega</li>
-          <li>Como testar se está funcionando antes de subir tráfego</li>
-        </ul>
-        <div class="step-out">Entregável: <span>Ponto de conversão funcionando</span></div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">4</div>
-      <div class="step-body">
-        <div class="step-title">Conteúdo</div>
-        <div class="step-sub">Como criar conteúdo que trabalha por você — mesmo sem ideias todo dia</div>
-        <ul class="step-items">
-          <li>Os 3 tipos de conteúdo: atrai, conecta, gera oportunidade</li>
-          <li>Matriz 4×4: categorias (Imóvel, Autoridade, Valor, Prova) × objetivos (Atrair, Conectar, Converter, Nutrir)</li>
-          <li>Como criar consistência sem depender de inspiração</li>
-          <li>Planejamento semanal prático</li>
-        </ul>
-        <div class="step-out">Entregável: <span>Matriz preenchida + primeiros 8 posts planejados</span></div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="step-num">5</div>
-      <div class="step-body">
-        <div class="step-title">Tráfego</div>
-        <div class="step-sub">Como fazer o anúncio certo chegar na pessoa certa — sem desperdiçar dinheiro</div>
-        <ul class="step-items">
-          <li>Funil de tráfego completo: TOFU, MOFU, BOFU — onde cada campanha entra</li>
-          <li>Branding × Performance: o papel de cada tipo de campanha</li>
-          <li>Campanhas do mercado imobiliário: WhatsApp, Formulários, Lançamentos, Geolocalização</li>
-          <li>Métricas que importam: CPM, CTR, CPL, custo por conversa</li>
-        </ul>
-        <div class="step-out">Entregável: <span>Primeira campanha configurada e ativa</span></div>
-      </div>
-    </div>
-
+    <p style="margin-top:22px;font-size:13px;color:var(--muted)">Fale com Erik Tafuri via WhatsApp · arriveindigital@gmail.com</p>
   </div>
-</div>
+</section>
 
-<!-- ── GRADE ── -->
-<div class="view" id="view-grade">
-  <div class="view-hero">
-    <div class="view-tag">🎬 Produto</div>
-    <div class="view-title">Grade de <span>Aulas</span></div>
-    <div class="view-sub">21 aulas — metodologia completa gravada. Clique no módulo para expandir.</div>
+<footer>
+  <div class="container">
+    <p>© 2026 Arrive In Digital — CNPJ 57.696.579/0001-96</p>
+    <p style="margin-top:4px">Rua Otto Benz, 1253, Sala 14, Nova Ribeirania — Ribeirão Preto/SP</p>
   </div>
-  <div class="view-body">
-
-    <div class="modulo">
-      <div class="mod-header open" onclick="toggleMod(this)">
-        <span class="mod-num">Módulo 0</span>
-        <span class="mod-title">Boas-vindas</span>
-        <span class="mod-count">1 aula</span>
-        <span class="mod-arrow">▾</span>
-      </div>
-      <div class="mod-body open">
-        <div class="aula"><div class="aula-n">Aula 1</div><div><div class="aula-title">O sistema, os 5 passos e como usar o curso</div><div class="aula-desc">Os 5 Passos da metodologia, a lógica da sequência e como extrair o máximo do curso.</div></div></div>
-      </div>
-    </div>
-
-    <div class="modulo">
-      <div class="mod-header" onclick="toggleMod(this)">
-        <span class="mod-num">Módulo 1</span>
-        <span class="mod-title">Planejamento</span>
-        <span class="mod-count">3 aulas</span>
-        <span class="mod-arrow">▾</span>
-      </div>
-      <div class="mod-body">
-        <div class="aula"><div class="aula-n">Aula 2</div><div><div class="aula-title">Como o mercado imobiliário funciona no digital</div><div class="aula-desc">Funil de aquisição imobiliário, jornada do comprador online, por que depender só de portal e indicação é estruturalmente frágil.</div></div></div>
-        <div class="aula"><div class="aula-n">Aula 3</div><div><div class="aula-title">Seu público e sua oferta</div><div class="aula-desc">Como definir o público comprador na prática: perfil, tipo de imóvel, faixa de valor. Como transformar imóvel em proposta — sair do genérico.</div></div></div>
-        <div class="aula"><div class="aula-n">Aula 4</div><div><div class="aula-title">Pesquisa de mercado e benchmarking</div><div class="aula-desc">Como analisar concorrentes, onde olhar, o que extrair de insight rápido. Como identificar lacunas e definir direção estratégica.</div></div></div>
-      </div>
-    </div>
-
-    <div class="modulo">
-      <div class="mod-header" onclick="toggleMod(this)">
-        <span class="mod-num">Módulo 2</span>
-        <span class="mod-title">Posicionamento</span>
-        <span class="mod-count">3 aulas</span>
-        <span class="mod-arrow">▾</span>
-      </div>
-      <div class="mod-body">
-        <div class="aula"><div class="aula-n">Aula 5</div><div><div class="aula-title">Construindo seu posicionamento digital</div><div class="aula-desc">O que é posicionamento, como definir comunicação central — o que falar, como falar, qual linha seguir.</div></div></div>
-        <div class="aula"><div class="aula-n">Aula 6</div><div><div class="aula-title">Perfil e bio: como estruturar sua presença no Instagram</div><div class="aula-desc">Estrutura obrigatória do perfil: bio, foto, destaques. Como fazer a primeira impressão trabalhar a favor do lead.</div></div></div>
-        <div class="aula"><div class="aula-n">Aula 7</div><div><div class="aula-title">Os 3 Conteúdos de Posicionamento</div><div class="aula-desc">Os 3 posts fixados que fazem o perfil vender antes do tráfego: Apresentação, Prova Social e Oportunidade. Estrutura, copy e lógica de cada um.</div></div></div>
-      </div>
-    </div>
-
-    <div class="modulo">
-      <div class="mod-header" onclick="toggleMod(this)">
-        <span class="mod-num">Módulo 3</span>
-        <span class="mod-title">Estrutura</span>
-        <span class="mod-count">2 aulas</span>
-        <span class="mod-arrow">▾</span>
-      </div>
-      <div class="mod-body">
-        <div class="aula"><div class="aula-n">Aula 8</div><div><div class="aula-title">O que é ponto de conversão e como funciona</div><div class="aula-desc">Tipos de ponto de conversão, qual usar em cada situação, fluxo do lead desde o clique até o contato. <strong style="color:var(--yellow)">→ Pitch do Imob Command nesta aula.</strong></div></div></div>
-        <div class="aula"><div class="aula-n">Aula 9</div><div><div class="aula-title">Montando sua landing page e formulário</div><div class="aula-desc">O que precisa ter e o que evitar. Configuração prática do formulário. Como testar antes de subir tráfego.</div></div></div>
-      </div>
-    </div>
-
-    <div class="modulo">
-      <div class="mod-header" onclick="toggleMod(this)">
-        <span class="mod-num">Módulo 4</span>
-        <span class="mod-title">Conteúdo</span>
-        <span class="mod-count">2 aulas</span>
-        <span class="mod-arrow">▾</span>
-      </div>
-      <div class="mod-body">
-        <div class="aula"><div class="aula-n">Aula 10</div><div><div class="aula-title">Os tipos de conteúdo e a Matriz 4×4</div><div class="aula-desc">Os 3 tipos de conteúdo. A Matriz 4×4: categorias × objetivos. Como usar sem travar.</div></div></div>
-        <div class="aula"><div class="aula-n">Aula 11</div><div><div class="aula-title">Planejamento de conteúdo na prática</div><div class="aula-desc">Como montar o calendário semanal sem depender de inspiração. Frequência mínima e formatos por objetivo.</div></div></div>
-      </div>
-    </div>
-
-    <div class="modulo">
-      <div class="mod-header" onclick="toggleMod(this)">
-        <span class="mod-num">Módulo 5</span>
-        <span class="mod-title">Tráfego</span>
-        <span class="mod-badge">Módulo mais denso</span>
-        <span class="mod-count">10 aulas</span>
-        <span class="mod-arrow">▾</span>
-      </div>
-      <div class="mod-body">
-        <div class="aula"><div class="aula-n">Aula 12</div><div><div class="aula-title">Estratégia: funil completo e onde cada campanha entra</div><div class="aula-desc">Funil TOFU, MOFU, BOFU. Qual campanha entra em cada etapa e como elas se conectam.</div></div></div>
-        <div class="aula"><div class="aula-n">Aula 13</div><div><div class="aula-title">Branding × Performance</div><div class="aula-desc">A diferença entre construir presença e gerar lead direto. Como equilibrar o investimento em cada frente.</div></div></div>
-        <div class="aula"><div class="aula-n">Aula 14</div><div><div class="aula-title">Setup: BM, conta de anúncios e Pixel</div><div class="aula-desc">Configuração completa do ambiente. Erros mais comuns e como evitar.</div></div></div>
-        <div class="aula"><div class="aula-n">Aula 15</div><div><div class="aula-title">Criativos e copy de anúncio</div><div class="aula-desc">O que faz um anúncio funcionar no mercado imobiliário. Como criar variações para testar.</div></div></div>
-        <div class="aula"><div class="aula-n">Aula 16</div><div><div class="aula-title">Campanha de Branding na prática</div><div class="aula-desc">Como configurar, subir e acompanhar. Métricas de branding: o que olhar e o que ignorar.</div></div></div>
-        <div class="aula"><div class="aula-n">Aula 17</div><div><div class="aula-title">Campanhas de WhatsApp</div><div class="aula-desc">Campanha com objetivo de mensagens diretas. Segmentação, copy, criativo e fluxo após o clique.</div></div></div>
-        <div class="aula"><div class="aula-n">Aula 18</div><div><div class="aula-title">Campanhas de Formulários</div><div class="aula-desc">Lead Form nativo do Meta. Quando usar formulário vs landing page. Perguntas que qualificam o lead.</div></div></div>
-        <div class="aula"><div class="aula-n">Aula 19</div><div><div class="aula-title">Campanhas de Lançamentos Imobiliários</div><div class="aula-desc">Estrutura específica: expectativa, lista de interesse, abertura de vendas. Como escalar em janelas curtas.</div></div></div>
-        <div class="aula"><div class="aula-n">Aula 20</div><div><div class="aula-title">Campanhas de Geolocalização</div><div class="aula-desc">Raio, cidade, bairro — quando usar cada um e como combinar com o posicionamento.</div></div></div>
-        <div class="aula"><div class="aula-n">Aula 21</div><div><div class="aula-title">Métricas e otimização</div><div class="aula-desc">CPM, CTR, CPL, custo por conversa. Como ler os dados, identificar o gargalo e o que ajustar primeiro.</div></div></div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ── POTENCIAL ── -->
-<div class="view" id="view-potencial">
-  <div class="view-hero">
-    <div class="view-tag">📈 Estratégia</div>
-    <div class="view-title">Potencial & <span>Stack de Receita</span></div>
-    <div class="view-sub">Todas as frentes de receita — por evento e recorrente — e o cenário de cruzeiro no mês 12.</div>
-  </div>
-  <div class="view-body">
-
-    <div class="sec-label" style="margin-bottom:12px">Receita por Evento (venda única)</div>
-    <div class="card" style="padding:0;overflow:hidden;margin-bottom:14px">
-      <div class="rev-row">
-        <div><div class="rev-name">Low Ticket Stack</div><div class="rev-type" style="color:var(--pl)">Evento</div><div class="rev-desc">Swipe File R$27–47 → upsell "Conteúdo que Vende" R$97–197</div></div>
-        <div class="rev-bar-wrap"><div class="rev-bar"><div class="rev-bar-fill" style="width:12%;background:var(--p)"></div></div></div>
-        <div class="rev-val"><div class="rev-val" style="text-align:right"><div class="v-main" style="color:var(--pl)">R$9–12k</div><div class="v-sub">cruzeiro / mês</div></div></div>
-      </div>
-      <div class="rev-row">
-        <div><div class="rev-name">Mentoria Imob In Digital</div><div class="rev-type" style="color:var(--pl)">Evento · Produto âncora</div><div class="rev-desc">8–12 vendas/mês × R$1.497</div></div>
-        <div class="rev-bar-wrap"><div class="rev-bar"><div class="rev-bar-fill" style="width:40%;background:var(--p)"></div></div></div>
-        <div class="rev-val"><div class="v-main" style="color:var(--pl)">R$12–18k</div><div class="v-sub">cruzeiro / mês</div></div>
-      </div>
-      <div class="rev-row">
-        <div><div class="rev-name">Imob Funnel (entrada)</div><div class="rev-type" style="color:var(--pl)">Evento · Upsell da Mentoria</div><div class="rev-desc">Assessoria completa 60 dias · 2 novos/mês</div></div>
-        <div class="rev-bar-wrap"><div class="rev-bar"><div class="rev-bar-fill" style="width:55%;background:var(--p)"></div></div></div>
-        <div class="rev-val"><div class="v-main" style="color:var(--pl)">R$5,3k</div><div class="v-sub">cruzeiro / mês</div></div>
-      </div>
-      <div class="rev-row" style="border-bottom:none">
-        <div><div class="rev-name">Workshop Imob In Digital</div><div class="rev-type" style="color:var(--tx3)">Evento · Futuro</div><div class="rev-desc">R$15–25k por lançamento · 2–3×/ano</div></div>
-        <div class="rev-bar-wrap"><div class="rev-bar"><div class="rev-bar-fill" style="width:30%;background:var(--border2)"></div></div></div>
-        <div class="rev-val"><div class="v-main" style="color:var(--tx3)">Pontual</div><div class="v-sub">quando estável</div></div>
-      </div>
-    </div>
-
-    <div class="sec-label" style="margin-bottom:12px">Receita Recorrente — MRR (acumula todo mês)</div>
-    <div class="card" style="padding:0;overflow:hidden;margin-bottom:24px">
-      <div class="rev-row">
-        <div style="flex:1"><div class="rev-name">Imob Command — SaaS</div><div class="rev-type" style="color:var(--greenl)">MRR · Cumulativo</div><div class="rev-desc">R$197–297/mês por assinante · ofertado na Aula 8 · cada aluno é cliente potencial</div></div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 20px;flex-shrink:0">
-          <div style="text-align:center;padding:10px 14px;background:var(--surf2);border-radius:var(--r-sm)">
-            <div style="font-size:16px;font-weight:800">R$4,9k</div>
-            <div style="font-size:10px;color:var(--tx2);margin-top:2px">20 ass.<br>mês 6</div>
-          </div>
-          <div style="text-align:center;padding:10px 14px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.25);border-radius:var(--r-sm)">
-            <div style="font-size:16px;font-weight:800;color:var(--greenl)">R$12,4k</div>
-            <div style="font-size:10px;color:var(--tx2);margin-top:2px">50 ass.<br>mês 12</div>
-          </div>
-          <div style="text-align:center;padding:10px 14px;background:var(--surf2);border-radius:var(--r-sm)">
-            <div style="font-size:16px;font-weight:800">R$24,7k</div>
-            <div style="font-size:10px;color:var(--tx2);margin-top:2px">100 ass.<br>mês 18</div>
-          </div>
-        </div>
-      </div>
-      <div class="rev-row" style="border-bottom:none">
-        <div><div class="rev-name">Imob Funnel — Recorrência</div><div class="rev-type" style="color:var(--greenl)">MRR · Baixo churn</div><div class="rev-desc">R$147/mês por cliente · 10 clientes em recorrência</div></div>
-        <div class="rev-bar-wrap"><div class="rev-bar"><div class="rev-bar-fill" style="width:25%;background:var(--green)"></div></div></div>
-        <div class="rev-val"><div class="v-main" style="color:var(--greenl)">R$1,5k</div><div class="v-sub">/ mês</div></div>
-      </div>
-    </div>
-
-    <div class="sec-label" style="margin-bottom:12px">Cenário de Cruzeiro — Mês 12</div>
-    <div class="crz" style="margin-bottom:24px">
-      <div class="crz-item"><div class="crz-label">Mentoria</div><div class="crz-val" style="color:var(--pl)">R$14,9k</div><div class="crz-sub">10 vendas/mês</div></div>
-      <div class="crz-item"><div class="crz-label">Low Ticket</div><div class="crz-val" style="color:var(--pl)">R$10k</div><div class="crz-sub">150 swipe + 30 ups.</div></div>
-      <div class="crz-item"><div class="crz-label">Imob Funnel</div><div class="crz-val" style="color:var(--pl)">R$6,8k</div><div class="crz-sub">2 novos + 10 recorr.</div></div>
-      <div class="crz-item"><div class="crz-label">Imob Command MRR</div><div class="crz-val" style="color:var(--greenl)">R$12,4k</div><div class="crz-sub">50 assinantes</div></div>
-      <div class="crz-item"><div class="crz-label">Clientes Ativos</div><div class="crz-val">base</div><div class="crz-sub">assessoria contínua</div></div>
-      <div class="crz-item"><div class="crz-label">Total / mês</div><div class="crz-val" style="font-size:24px;color:var(--greenl)">R$44k+</div><div class="crz-sub">conservador · sem Workshop</div></div>
-    </div>
-
-    <div style="overflow-x:auto">
-      <table class="tbl">
-        <thead><tr><th>Mês</th><th>Fase</th><th>Mentoria</th><th>Low Ticket</th><th>Imob Funnel</th><th>Command MRR</th><th>Total novo est.</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Jun</strong></td><td style="color:var(--tx2)">Setup + gravações</td><td style="color:var(--tx3)">—</td><td style="color:var(--tx3)">—</td><td style="color:var(--tx2)">Clientes ativos</td><td style="color:var(--tx3)">—</td><td style="color:var(--tx3)">Base</td></tr>
-          <tr><td><strong>Jul</strong></td><td style="color:var(--tx2)">Live ativa + low ticket no ar</td><td>3–5 × R$1.497</td><td>50–80 vendas</td><td style="color:var(--tx2)">Clientes ativos</td><td style="color:var(--tx3)">pré-lançamento</td><td style="color:var(--greenl)">~R$7–12k</td></tr>
-          <tr><td><strong>Ago</strong></td><td style="color:var(--tx2)">Escala + otimização</td><td>5–8 × R$1.497</td><td>80–150 vendas</td><td>1 novo</td><td style="color:var(--tx3)">pré-lançamento</td><td style="color:var(--greenl)">~R$15–25k</td></tr>
-          <tr><td><strong>Set</strong></td><td style="color:var(--tx2)">Ritmo de cruzeiro + Command</td><td>7–10 × R$1.497</td><td>100–150 vendas</td><td>1–2 novos</td><td style="color:var(--greenl)">10 ass. → R$2,5k</td><td style="color:var(--greenl)">~R$22–35k</td></tr>
-          <tr><td><strong>Out</strong></td><td style="color:var(--tx2)">Possível Workshop</td><td>8–12 × R$1.497</td><td>Escala</td><td>2+ novos</td><td style="color:var(--greenl)">25 ass. → R$6,2k</td><td style="color:var(--greenl)">~R$28–42k</td></tr>
-          <tr><td><strong>Nov–Dez</strong></td><td style="color:var(--tx2)">Consolidação + renovações</td><td>Renovações + novos</td><td>Escala</td><td>Recorrência</td><td style="color:var(--greenl)">40 ass. → R$9,9k</td><td style="color:var(--pl)"><strong>R$35–50k/mês</strong></td></tr>
-        </tbody>
-      </table>
-    </div>
-
-  </div>
-</div>
-
-<!-- ── EXECUÇÃO ── -->
-<div class="view" id="view-execucao">
-  <div class="view-hero">
-    <div class="view-tag">🗓 Planejamento</div>
-    <div class="view-title">Execução & <span>Cronograma</span></div>
-    <div class="view-sub">Equipe de 3 · Ritmo sustentável com clientes ativos em paralelo.</div>
-  </div>
-  <div class="view-body">
-
-    <div class="callout callout-p" style="margin-bottom:20px">
-      <div class="c-label">Premissas</div>
-      <div class="c-text">Equipe de 3 (Erik + Miguel + 1). Clientes ativos têm atendimento contínuo. As gravações e setup de funis não podem ser feitos às custas da qualidade do que já foi entregue. Ritmo sustentável — não um sprint que quebra a operação.</div>
-    </div>
-
-    <div style="display:flex;gap:12px;align-items:center;margin-bottom:16px">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--tx3)">Legenda:</div>
-      <span class="who who-e">Erik</span>
-      <span class="who who-m">Miguel</span>
-      <span class="who who-a">Ambos</span>
-    </div>
-
-    <div class="cron-month">
-      <div class="cron-head">
-        <div class="cron-dot" style="background:var(--greenl)"></div>
-        <div class="cron-month-name">Junho 2026</div>
-        <div class="cron-focus">Setup + gravações iniciais</div>
-      </div>
-      <div class="cron-tasks">
-        <div class="cron-task"><span class="who who-a">Ambos</span><div class="cron-text">Fechar este documento e definir prioridades — quem faz o quê até o final do mês</div></div>
-        <div class="cron-task"><span class="who who-e">Erik</span><div class="cron-text">Gravar Módulo 0 (Aula 1) e Módulo 1 — Aulas 2, 3 e 4. Prioridade máxima.</div></div>
-        <div class="cron-task"><span class="who who-m">Miguel</span><div class="cron-text">Montar página de captura para a live semanal (Hotmart ou ferramenta simples)</div></div>
-        <div class="cron-task"><span class="who who-m">Miguel</span><div class="cron-text">Setup Hotmart: produto criado, área de membros básica, grupos do WhatsApp criados</div></div>
-        <div class="cron-task"><span class="who who-e">Erik</span><div class="cron-text">Definir dia e hora das lives. Fazer a primeira live mesmo sem alunos — gravar para validar o formato.</div></div>
-        <div class="cron-task"><span class="who who-m">Miguel</span><div class="cron-text">Criar swipe file de conteúdo (low ticket) — compilar 50+ formatos a partir do material de clientes</div></div>
-      </div>
-    </div>
-
-    <div class="cron-month">
-      <div class="cron-head">
-        <div class="cron-dot" style="background:var(--pl)"></div>
-        <div class="cron-month-name">Julho 2026</div>
-        <div class="cron-focus">Funis no ar + primeiras vendas</div>
-      </div>
-      <div class="cron-tasks">
-        <div class="cron-task"><span class="who who-m">Miguel</span><div class="cron-text">Low ticket no ar no Hotmart: swipe file + upsell "Conteúdo que Vende" configurado</div></div>
-        <div class="cron-task"><span class="who who-m">Miguel</span><div class="cron-text">Tráfego pago para o low ticket ligado (Meta Ads — budget inicial baixo para validação)</div></div>
-        <div class="cron-task"><span class="who who-e">Erik</span><div class="cron-text">Gravar Módulo 2 — Aulas 5, 6 e 7 (Posicionamento)</div></div>
-        <div class="cron-task"><span class="who who-e">Erik</span><div class="cron-text">Lives semanais com pitch da mentoria no final. Meta: fechar primeiros 3–5 alunos.</div></div>
-        <div class="cron-task"><span class="who who-a">Ambos</span><div class="cron-text">Onboarding dos primeiros alunos — setup dos grupos e acesso à área de membros</div></div>
-      </div>
-    </div>
-
-    <div class="cron-month">
-      <div class="cron-head">
-        <div class="cron-dot" style="background:var(--yellow)"></div>
-        <div class="cron-month-name">Agosto 2026</div>
-        <div class="cron-focus">Gravações + escala dos funis</div>
-      </div>
-      <div class="cron-tasks">
-        <div class="cron-task"><span class="who who-e">Erik</span><div class="cron-text">Gravar Módulo 3 — Aulas 8 e 9 (Estrutura). Incluir pitch do Imob Command na Aula 8.</div></div>
-        <div class="cron-task"><span class="who who-e">Erik</span><div class="cron-text">Gravar Módulo 4 — Aulas 10 e 11 (Conteúdo)</div></div>
-        <div class="cron-task"><span class="who who-m">Miguel</span><div class="cron-text">Otimizar campanhas do low ticket. Escalar o que funcionar.</div></div>
-        <div class="cron-task"><span class="who who-m">Miguel</span><div class="cron-text">Construir página de vendas da Mentoria (para o pitch da live ter onde mandar)</div></div>
-        <div class="cron-task"><span class="who who-a">Ambos</span><div class="cron-text">Avaliar primeiros alunos: feedback, gaps no produto, ajustar ritmo das lives</div></div>
-      </div>
-    </div>
-
-    <div class="cron-month">
-      <div class="cron-head">
-        <div class="cron-dot" style="background:#f87171"></div>
-        <div class="cron-month-name">Setembro 2026</div>
-        <div class="cron-focus">Módulo de Tráfego + ritmo de cruzeiro</div>
-      </div>
-      <div class="cron-tasks">
-        <div class="cron-task"><span class="who who-e">Erik</span><div class="cron-text">Gravar Módulo 5 — Aulas 12 a 21 (Tráfego). 2–3 aulas por semana.</div></div>
-        <div class="cron-task"><span class="who who-m">Miguel</span><div class="cron-text">Funil da live semanal com tráfego pago ativo (anúncios para a página de captura)</div></div>
-        <div class="cron-task"><span class="who who-a">Ambos</span><div class="cron-text">Curso gravado completo disponível. Identificar alunos com perfil para upsell do Imob Funnel.</div></div>
-        <div class="cron-task"><span class="who who-a">Ambos</span><div class="cron-text">Planejar Workshop Imob In Digital como próximo grande funil (Q4 ou Q1 2027)</div></div>
-      </div>
-    </div>
-
-    <div class="card" style="margin-top:4px">
-      <div class="card-label">Regras de Operação</div>
-      <div class="g2" style="margin-top:10px">
-        <div style="font-size:13px;color:var(--tx2);line-height:1.8">
-          <strong style="color:var(--tx)">Clientes ativos primeiro.</strong> Nenhum atraso de entrega de cliente para gravar aula.<br><br>
-          <strong style="color:var(--tx)">1 gravação por semana mínimo.</strong> Em 10 semanas o curso está completo.<br><br>
-          <strong style="color:var(--tx)">Divisão clara:</strong> Erik cuida do conteúdo e das lives. Miguel cuida do setup técnico e funis.
-        </div>
-        <div style="font-size:13px;color:var(--tx2);line-height:1.8">
-          <strong style="color:var(--tx)">Lives são compromisso fixo.</strong> Uma vez definido dia e hora, não muda.<br><br>
-          <strong style="color:var(--tx)">Low ticket roda sozinho.</strong> 2–3h para criar o produto, depois escala com tráfego sem intervenção.<br><br>
-          <strong style="color:var(--tx)">Imob Command é médio prazo.</strong> Não travar tudo esperando o SaaS — lançar o que está pronto.
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-</main>
+</footer>
 
 <script>
-  // ── Navigation ──────────────────────────────
-  const links = document.querySelectorAll('.sb-link');
-  const views = document.querySelectorAll('.view');
+// Nav scroll
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 60));
 
-  links.forEach(link => {
-    link.addEventListener('click', () => {
-      const target = link.dataset.view;
-      links.forEach(l => l.classList.remove('active'));
-      views.forEach(v => v.classList.remove('active'));
-      link.classList.add('active');
-      document.getElementById('view-' + target).classList.add('active');
-      document.getElementById('main').scrollTo({top:0, behavior:'smooth'});
-    });
-  });
+// Avatar tabs
+function showAvatar(id, btn) {
+  document.querySelectorAll('.avatar-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.avatar-tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('av-' + id).classList.add('active');
+  btn.classList.add('active');
+}
 
-  // ── Avatar Tabs ─────────────────────────────
-  function setAvatar(id, tab) {
-    document.querySelectorAll('.av-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.av-tab').forEach(t => t.classList.remove('active'));
-    document.getElementById('av-' + id).classList.add('active');
-    tab.classList.add('active');
+// Funnel zoom/pan
+const svg = document.getElementById('funnel-svg');
+const cvs = document.getElementById('cvs');
+let scale = 1, tx = 0, ty = 0, panning = false, ox = 0, oy = 0;
+
+function applyT() {
+  cvs.setAttribute('transform', `translate(${tx},${ty}) scale(${scale})`);
+}
+
+svg.addEventListener('wheel', e => {
+  e.preventDefault();
+  const dir = e.deltaY > 0 ? -0.12 : 0.12;
+  const ns = Math.max(0.25, Math.min(3.5, scale + dir));
+  const rect = svg.getBoundingClientRect();
+  const mx = (e.clientX - rect.left) / rect.width * 1100;
+  const my = (e.clientY - rect.top) / rect.height * 920;
+  const r = ns / scale;
+  tx = mx - r * (mx - tx);
+  ty = my - r * (my - ty);
+  scale = ns;
+  applyT();
+}, { passive: false });
+
+svg.addEventListener('mousedown', e => {
+  if (e.button !== 0) return;
+  panning = true; ox = e.clientX - tx; oy = e.clientY - ty;
+});
+window.addEventListener('mousemove', e => {
+  if (!panning) return;
+  tx = e.clientX - ox; ty = e.clientY - oy; applyT();
+});
+window.addEventListener('mouseup', () => { panning = false; });
+
+let lx, ly;
+svg.addEventListener('touchstart', e => { if (e.touches.length===1) { lx=e.touches[0].clientX; ly=e.touches[0].clientY; } }, { passive:true });
+svg.addEventListener('touchmove', e => {
+  e.preventDefault();
+  if (e.touches.length===1) {
+    tx += e.touches[0].clientX - lx; ty += e.touches[0].clientY - ly;
+    lx=e.touches[0].clientX; ly=e.touches[0].clientY; applyT();
   }
+}, { passive:false });
 
-  // ── Módulo accordion ────────────────────────
-  function toggleMod(header) {
-    const body = header.nextElementSibling;
-    header.classList.toggle('open');
-    body.classList.toggle('open');
-  }
+document.getElementById('zoomIn').onclick = () => { scale = Math.min(3.5, scale+0.2); applyT(); };
+document.getElementById('zoomOut').onclick = () => { scale = Math.max(0.25, scale-0.2); applyT(); };
+document.getElementById('zoomReset').onclick = () => { scale=1; tx=0; ty=0; applyT(); };
+
+// Node hover highlight
+document.querySelectorAll('.fn').forEach(n => {
+  const r = n.querySelector('rect');
+  n.addEventListener('mouseenter', () => { if(r) r.style.filter='brightness(1.5)'; });
+  n.addEventListener('mouseleave', () => { if(r) r.style.filter=''; });
+});
 </script>
 </body>
 </html>
